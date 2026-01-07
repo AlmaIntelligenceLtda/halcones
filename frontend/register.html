@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halcones - Registro</title>
+
+  <link rel="stylesheet" href="../assets/vendors/core/core.css" />
+  <link rel="stylesheet" href="../assets/vendors/sweetalert2/sweetalert2.min.css" />
+  <link rel="stylesheet" href="../assets/fonts/feather-font/css/iconfont.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="shortcut icon" href="assets/images/favicon.png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <style>
+    /* Copiado de login.html — fondo y estilos de tarjeta */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #ffc533, #ffb400, #6b4e2e, #000);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: float 12s infinite linear;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .card-login {
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      color: #fff;
+      animation: fadeInUp 1s ease;
+      width: 380px;
+      text-align: center;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo-halcones {
+      width: 100px;
+      margin-bottom: 1rem;
+      animation: glow 3s infinite;
+      border-radius: 10px;
+    }
+
+    @keyframes glow {
+      0%,
+      100% {
+        box-shadow: 0 0 10px #ffc533, 0 0 20px #ffc533;
+      }
+
+      50% {
+        box-shadow: 0 0 25px #ffb400, 0 0 50px #6b4e2e;
+      }
+    }
+
+    h3 {
+      font-weight: bold;
+      color: #ffc533;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 span { color: #fff; }
+
+    h6 { font-weight: normal; margin-bottom: 1.5rem; color: #ccc; }
+
+    .form-control { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); border-radius:8px; color:#fff; }
+    .form-control:focus { border-color:#ffc533; box-shadow:0 0 10px rgba(255,197,51,0.7); background: rgba(0,0,0,0.6); }
+    .form-control::placeholder { color:#aaa }
+    label { color:#ffc533; font-weight:500; float:left }
+
+    .btn-login { background: linear-gradient(90deg,#ffc533,#6b4e2e); border:none; padding:0.75rem; font-size:1rem; border-radius:10px; font-weight:bold; color:#fff; width:100%; transition:all 0.3s ease }
+    .btn-login:hover { transform: translateY(-2px); box-shadow:0 8px 25px rgba(255,197,51,0.6) }
+
+    .btn-outline-light { border-color: #ffc533; color: #ffc533 }
+    .btn-outline-light:hover { background:#ffc533; color:#000 }
+  </style>
+</head>
+
+<body>
+  <div class="particles">
+    <div class="particle" style="left:10%; animation-duration:10s;"></div>
+    <div class="particle" style="left:30%; animation-duration:14s;"></div>
+    <div class="particle" style="left:50%; animation-duration:18s;"></div>
+    <div class="particle" style="left:70%; animation-duration:12s;"></div>
+    <div class="particle" style="left:90%; animation-duration:20s;"></div>
+  </div>
+
+  <div class="card-login">
+    <img src="../assets/images/logo.png" alt="Halcones" class="logo-halcones">
+    <h3>Halcones</h3>
+    <h6 id="text-error">Crea tu cuenta.</h6>
+
+    <form id="registerForm" class="forms-login" onsubmit="return false">
+      <div class="mb-3">
+        <label for="nombres" class="form-label">Nombres</label>
+        <input id="nombres" type="text" class="form-control" placeholder="Nombres" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="apellidos" class="form-label">Apellidos</label>
+        <input id="apellidos" type="text" class="form-control" placeholder="Apellidos" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input id="email" type="email" class="form-control" placeholder="ejemplo@correo.com" required />
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <input id="password" type="password" class="form-control password1" placeholder="Contraseña" required />
+          <button class="btn btn-outline-light show-pass1" id="verPasswordRegister" type="button">
+            <i class="fa fa-fw fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <button id="btnRegister" type="submit" class="btn btn-login">Registrarme</button>
+      <div id="msg" class="text-danger" style="margin-top:8px"></div>
+    </form>
+
+    <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.1);">
+      <small style="color:#bbb">¿Ya tienes cuenta? <a href="/login.html" style="color:#ffd080; text-decoration:none;">Iniciar sesión</a></small>
+    </div>
+  </div>
+
+  <script src="../assets/vendors/core/core.js"></script>
+  <script src="./js/register.js"></script>
+  <script src="../assets/vendors/promise-polyfill/polyfill.min.js"></script>
+  <script src="../assets/vendors/feather-icons/feather.min.js"></script>
+</body>
+
+</html>

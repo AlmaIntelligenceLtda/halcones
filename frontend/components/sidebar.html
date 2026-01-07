@@ -1,0 +1,107 @@
+<style>
+  .titulo {
+    font-weight: 900;
+    color: #000000;
+    font-family: 'Arial Black', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .titulo .ai {
+    font-weight: 800;
+    color: #FFC300 !important;
+    /* Fuerza el amarillo Caterpillar */
+    display: inline;
+  }
+
+  /* Evita que los enlaces o encabezados sobrescriban el color */
+  .sidebar-brand,
+  .sidebar-brand h3,
+  .sidebar-brand span {
+    color: inherit !important;
+    text-decoration: none;
+  }
+</style>
+
+<script src="../js/load-settings.js"></script>
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <a href="#" class="sidebar-brand" data-page="dashboard">
+      <h3 class="titulo">Halcones</h3>
+    </a>
+    <div class="sidebar-toggler not-active">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="sidebar-body">
+    <ul class="nav">
+      <!-- Categoría principal -->
+      <li class="nav-item nav-category">Principal</li>
+
+      <li class="nav-item nav-menu" id="menuDashboard">
+        <a href="#" class="nav-link" data-page="dashboard">
+          <i class="link-icon" data-feather="box"></i>
+          <span class="link-title">Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-menu" id="menuReportes">
+        <a href="#" class="nav-link" data-page="reportes">
+          <i class="link-icon" data-feather="pie-chart"></i>
+          <span class="link-title">Reportes</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-category">Gestión</li>
+
+      <li class="nav-item nav-menu" id="menuContactos">
+        <a href="#" class="nav-link" data-page="leads">
+          <i class="link-icon" data-feather="inbox"></i>
+          <span class="link-title">Contactos / Leads</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-menu" id="menuLandingsTotales">
+        <a href="#" class="nav-link" data-page="landings">
+          <i class="link-icon" data-feather="layout"></i>
+          <span class="link-title">Landings Totales</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-menu" id="menuUsuarios">
+        <a href="#" class="nav-link" data-page="usuarios">
+          <i class="link-icon" data-feather="users"></i>
+          <span class="link-title">Usuarios</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-menu" id="menuConfiguracion">
+        <a href="#" class="nav-link" data-page="configuracion">
+          <i class="link-icon" data-feather="settings"></i>
+          <span class="link-title">Configuración</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-menu" id="menuMetricas">
+        <a href="#" class="nav-link" data-page="metricas">
+          <i class="link-icon" data-feather="bar-chart-2"></i>
+          <span class="link-title">Métricas Globales</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-menu" id="menuClientes">
+        <a href="#" class="nav-link" data-page="clientes">
+          <i class="link-icon" data-feather="user"></i>
+          <span class="link-title">Clientes</span>
+        </a>
+      </li>
+      <li class="nav-item nav-menu" id="menuHistorias">
+        <a href="#" class="nav-link" data-page="historia">
+          <i class="link-icon" data-feather="file-text"></i>
+          <span class="link-title">Historias</span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</nav>

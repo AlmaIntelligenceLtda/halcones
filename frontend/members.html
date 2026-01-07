@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Miembros — Halcones</title>
+    <!-- Use absolute paths -->
+    <link rel="stylesheet" href="/assets/vendors/core/core.css" />
+    <link rel="stylesheet" href="/assets/fonts/feather-font/css/iconfont.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <style>
+        /* Styles from home.html tailored for members page */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #1e40af, #2749d6, #ff7a18, #1e3a8a);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles { position: absolute; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
+        .particle { position: absolute; width: 6px; height: 6px; background: rgba(255,255,255,0.85); border-radius:50%; animation: float 12s infinite linear }
+        @keyframes float { from { transform: translateY(100vh) scale(0.5); opacity:0 } 30%{opacity:1} to{ transform: translateY(-10vh) scale(1); opacity:0 } }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        header .logo { display: flex; align-items: center; gap: 10px; }
+        header .logo img { height: 40px; border-radius: 6px; }
+        header .logo strong { font-size: 1.2rem; color: #ffd080; }
+        header nav { display: flex; gap: 16px; }
+        header nav a { color: #e9e9e9; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        header nav a:hover { color: #ffd080; }
+
+        /* Main content wrapper */
+        main { position: relative; z-index: 5; padding: 40px 24px; max-width: 1200px; margin: 0 auto; flex: 1; width: 100%; box-sizing: border-box; }
+
+        .page-title { text-align: center; margin-bottom: 50px; }
+        .page-title h1 { font-size: 3rem; color: #ffd080; margin: 0 0 16px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .page-title p { color: #e9e9e9; font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        /* Member Card Styling */
+        .member-card {
+            background: rgba(255,255,255,0.1); /* Lighter glass */
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 208, 128, 0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 6px;
+            background: linear-gradient(90deg, #ffd080, #ff7a18);
+            opacity: 0.7;
+            transition: height 0.3s;
+        }
+        .member-card:hover::before { height: 8px; opacity: 1; }
+
+        .member-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #ffd080;
+            transition: transform 0.3s;
+        }
+        
+        .member-card:hover .member-icon { transform: rotate(15deg) scale(1.1); background: rgba(255, 208, 128, 0.2); }
+        .member-icon i { width: 30px; height: 30px; }
+
+        .member-info h3 {
+            margin: 0 0 10px;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .member-info p {
+            color: #ddd;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .member-actions {
+            margin-top: auto;
+        }
+
+        .btn-visit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.2);
+            gap: 10px;
+            box-sizing: border-box;
+        }
+        
+        .btn-visit:hover {
+            background: #ffd080;
+            color: #04102b;
+            border-color: #ffd080;
+            box-shadow: 0 4px 15px rgba(255, 122, 24, 0.3);
+        }
+
+        /* Footer */
+        footer { position: relative; z-index: 5; padding: 32px 24px; text-align: center; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+        footer p { color: #ddd; margin: 0; font-size: 0.95rem; }
+
+        @media (max-width:768px) {
+            header { padding: 12px 16px; flex-direction: column; gap: 12px; }
+            header nav { gap: 12px; }
+            .page-title h1 { font-size: 2.2rem; }
+            .member-card { padding: 20px; }
+        }
+        
+        /* Loader */
+        .loader {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #ffd080;
+            font-size: 1.5rem;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: #ffd080;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left:10%; animation-duration:10s;"></div>
+        <div class="particle" style="left:30%; animation-duration:14s;"></div>
+        <div class="particle" style="left:50%; animation-duration:18s;"></div>
+        <div class="particle" style="left:70%; animation-duration:12s;"></div>
+        <div class="particle" style="left:90%; animation-duration:20s;"></div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <img src="/assets/images/logo.png" alt="Halcones">
+            <strong>Halcones</strong>
+        </div>
+        <nav>
+            <a href="/home.html">Inicio</a>
+            <a href="/pages/demo">Demo</a>
+            <a href="/members" style="color: #ffd080; border-bottom: 2px solid #ffd080;">Miembros</a>
+            <a href="/quienes-somos.html">Quiénes somos</a>
+            <a href="/login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-title">
+            <h1>Comunidad de Creadores</h1>
+            <p>Explora proyectos increíbles creados por nuestros miembros.</p>
+        </div>
+
+        <div id="list" class="members-grid">
+            <div class="loader">
+                <div class="spinner"></div>
+                <div>Cargando miembros...</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Halcones — Plataforma de landings. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/assets/vendors/core/core.js"></script>
+    <script src="/assets/vendors/feather-icons/feather.min.js"></script>
+    <script src="/js/members.js"></script>
+</body>
+</html>

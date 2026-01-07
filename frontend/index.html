@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  
+  script-src 'self' 'unsafe-inline' 'unsafe-eval'
+    https://cdn.jsdelivr.net
+    https://cdn.jsdelivr.net/npm
+    https://cdnjs.cloudflare.com
+    https://unpkg.com
+    https://code.jquery.com
+    https://stackpath.bootstrapcdn.com
+    https://cdn.datatables.net;
+  
+  style-src 'self' 'unsafe-inline'
+    https://cdn.jsdelivr.net
+    https://cdn.jsdelivr.net/npm
+    https://cdnjs.cloudflare.com
+    https://unpkg.com
+    https://stackpath.bootstrapcdn.com
+    https://cdn.datatables.net
+    https://fonts.googleapis.com;
+  
+  font-src 'self' data: blob:
+    https://cdnjs.cloudflare.com
+    https://cdn.jsdelivr.net
+    https://fonts.gstatic.com;
+  
+  img-src 'self' data: https:;
+  
+  connect-src 'self'
+    https://cdn.datatables.net
+    https://nominatim.openstreetmap.org
+    http://143.198.235.129
+    https://cdn.jsdelivr.net
+    https://cdn.jsdelivr.net/sm
+    https://unpkg.com
+    https://cdnjs.cloudflare.com
+    https://rest.ably.io
+    https://realtime.ably.io
+    https://internet-up.ably-realtime.com
+    https://*.ably-realtime.com
+    wss://realtime.ably.io
+    wss://internet-up.ably-realtime.com
+    wss://*.ably-realtime.com;
+
+  frame-src 'self' data:;
+">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halcones - Viajes y Cruceros</title>
+
+  <!-- Estilos locales -->
+  <link rel="stylesheet" href="assets/vendors/core/core.css" />
+
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+  <link rel="stylesheet" href="assets/vendors/sweetalert2/sweetalert2.min.css" />
+  <link rel="stylesheet" href="assets/fonts/feather-font/css/iconfont.css" />
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Daterangepicker -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+  <!-- Select2 (tema Bootstrap 5) -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"
+    rel="stylesheet" />
+
+  <link rel="shortcut icon" href="assets/images/favicon.png" />
+
+  <!-- En la sección <head> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css">
+
+
+</head>
+
+<body>
+  <!-- 🔒 Oculto hasta validar sesión -->
+  <div id="app" hidden>
+    <div class="main-wrapper">
+      <!-- Sidebar -->
+      <div data-include="components/sidebar.html"></div>
+
+      <div class="page-wrapper">
+        <!-- Header -->
+        <div data-include="components/header.html"></div>
+
+        <!-- Contenido dinámico -->
+        <div class="page-content">
+          <!-- Por defecto vacío, cargado por JS -->
+        </div>
+
+        <!-- Footer -->
+        <div data-include="components/footer.html"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery (siempre primero) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Core -->
+  <script src="assets/vendors/core/core.js"></script>
+  <script src="assets/vendors/promise-polyfill/polyfill.min.js"></script>
+  <script src="assets/vendors/feather-icons/feather.min.js"></script>
+
+  <!-- Bootstrap 5 bundle (con Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Bootstrap Toggle -->
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  <!-- DataTables -->
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- Select2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Turf -->
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
+
+  <!-- Moment + Daterangepicker -->
+  <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+  <!-- jsPDF + XLSX + AutoTable + QRCode -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.1/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Papa + Carga masiva -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
+
+  <!-- GrapesJS (Builder) -->
+  <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+  <script src="https://unpkg.com/grapesjs"></script>
+  <script src="https://unpkg.com/grapesjs-preset-webpage"></script>
+
+  <!-- Vendors -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/vendors/feather-icons/feather.min.js"></script>
+  <script src="js/load-settings.js"></script>
+
+  <!-- Component Loader + lógica (ofuscados) -->
+  <script src="js/include-html.js"></script>
+  <script src="js/page.js"></script>
+  <script src="js/load-user.js"></script>
+  <script src="js/router.js"></script>
+
+  <!-- Global Utils -->
+  <script>
+    async function handleCreateLanding() {
+        // Simple client-side check if user already has landings
+        // In a real app, this should be a robust backend check or checking a cached value
+        try {
+            const btn = document.querySelector('button[onclick="handleCreateLanding()"]');
+            if(btn) {
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Verificando...';
+                btn.disabled = true;
+            }
+
+            const res = await fetch('/api/landings');
+            if (res.ok) {
+                const landings = await res.json();
+                if (landings && landings.length > 0) {
+                    // User has landings -> Redirect to Dashboard
+                    // alert('Ya tienes una landing creada. Redirigiendo a tus proyectos.');
+                    document.querySelector('[data-page="dashboard"]').click();
+                } else {
+                    // User has NO landings -> Go to Builder
+                    window.open('/build.html', '_blank');
+                }
+            } else {
+                // Fallback on error
+                window.open('/build.html', '_blank');
+            }
+        } catch (e) {
+            console.error(e);
+            window.open('/build.html', '_blank');
+        } finally {
+             // Reset button state if we are still on the page (didn't redirect)
+             const btn = document.querySelector('button[onclick="handleCreateLanding()"]');
+             if(btn) {
+                btn.innerHTML = '<i data-feather="plus-circle" class="me-2"></i> Crear Nueva Landing';
+                btn.disabled = false;
+                if(window.feather) feather.replace();
+             }
+        }
+    }
+  </script>
+
+  <!-- Inicializar Select2 con tema Bootstrap 5 -->
+  <script>
+    $(document).ready(function () {
+      $('#usuario, #zona, #tipoIncidente').select2({
+        theme: 'bootstrap-5',
+        placeholder: 'Selecciona...',
+        allowClear: true
+      });
+    });
+  </script>
+</body>
+
+</html>

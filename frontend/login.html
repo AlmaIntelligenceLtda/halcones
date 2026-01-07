@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halcones - Viajes y Cruceros</title>
+
+  <link rel="stylesheet" href="../assets/vendors/core/core.css" />
+  <link rel="stylesheet" href="../assets/vendors/sweetalert2/sweetalert2.min.css" />
+  <link rel="stylesheet" href="../assets/fonts/feather-font/css/iconfont.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="shortcut icon" href="assets/images/favicon.png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <style>
+    /* === Fondo dinámico === */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #ffc533, #ffb400, #6b4e2e, #000);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* === Partículas flotantes === */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: float 12s infinite linear;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* === Tarjeta login === */
+    .card-login {
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      color: #fff;
+      animation: fadeInUp 1s ease;
+      width: 350px;
+      text-align: center;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* === Logo === */
+    .logo-halcones {
+      width: 100px;
+      margin-bottom: 1rem;
+      animation: glow 3s infinite;
+      border-radius: 10px;
+    }
+
+    @keyframes glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 10px #ffc533, 0 0 20px #ffc533;
+      }
+
+      50% {
+        box-shadow: 0 0 25px #ffb400, 0 0 50px #6b4e2e;
+      }
+    }
+
+    h3 {
+      font-weight: bold;
+      color: #ffc533;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 span {
+      color: #fff;
+    }
+
+    h6 {
+      font-weight: normal;
+      margin-bottom: 1.5rem;
+      color: #ccc;
+    }
+
+    /* === Inputs === */
+    .form-control {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      color: #fff;
+    }
+
+    .form-control:focus {
+      border-color: #ffc533;
+      box-shadow: 0 0 10px rgba(255, 197, 51, 0.7);
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .form-control::placeholder {
+      color: #aaa;
+    }
+
+    label {
+      color: #ffc533;
+      font-weight: 500;
+      float: left;
+    }
+
+    /* === Botón login === */
+    .btn-login {
+      background: linear-gradient(90deg, #ffc533, #6b4e2e);
+      border: none;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      font-weight: bold;
+      color: #fff;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(270deg, #ffc533, #6b4e2e);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 197, 51, 0.6);
+    }
+
+    .btn-outline-light {
+      border-color: #ffc533;
+      color: #ffc533;
+    }
+
+    .btn-outline-light:hover {
+      background: #ffc533;
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Partículas -->
+  <div class="particles">
+    <div class="particle" style="left:10%; animation-duration:10s;"></div>
+    <div class="particle" style="left:30%; animation-duration:14s;"></div>
+    <div class="particle" style="left:50%; animation-duration:18s;"></div>
+    <div class="particle" style="left:70%; animation-duration:12s;"></div>
+    <div class="particle" style="left:90%; animation-duration:20s;"></div>
+  </div>
+
+  <!-- Tarjeta Login -->
+  <div class="card-login">
+    <img src="../assets/images/logo.png" alt="Halcones" class="logo-halcones">
+
+    <h3>Halcones</h3>
+    <h6 id="text-error">Hola 👋 Ingrese a su cuenta.</h6>
+
+    <form class="forms-login" onsubmit="return formSubmit(event)">
+      <div class="mb-3">
+        <label for="txtEmail" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="txtEmail" placeholder="ejemplo@correo.com" required autofocus />
+      </div>
+      <div class="mb-4">
+        <label for="txtPassword" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <input type="password" class="form-control password1" id="txtPassword" placeholder="Contraseña" required />
+          <button class="btn btn-outline-light show-pass1" id="verPasswordLogin" type="button">
+            <i class="fa fa-fw fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <button id="btnLogin" type="submit" class="btn btn-login">Iniciar Sesión</button>
+    </form>
+    <div style="margin-top:12px;">
+      <small style="color:#ccc">¿No tienes cuenta? <a href="/register.html" class="btn-outline-light" style="padding:6px 10px; border-radius:8px; text-decoration:none;">Regístrate</a></small>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="../assets/vendors/core/core.js"></script>
+  <script src="../assets/vendors/sweetalert2/sweetalert2.min.js"></script>
+  <script src="../js/load-settings.js"></script>
+  <script src="./js/login.js"></script>
+  <script src="../assets/vendors/promise-polyfill/polyfill.min.js"></script>
+  <script src="../assets/vendors/feather-icons/feather.min.js"></script>
+</body>
+
+</html>

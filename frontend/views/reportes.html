@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">Reportes y Estadísticas</h4>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Summary Cards -->
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title mb-2">Total Visualizaciones</h6>
+        <h2 id="total-views">0</h2>
+        <p class="text-muted">Acumulado histórico</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title mb-2">Landings Activas</h6>
+        <h2 id="total-landings-report">0</h2>
+        <p class="text-muted">Total de páginas creadas</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Chart -->
+  <div class="col-lg-12 col-xl-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-baseline mb-2">
+          <h6 class="card-title mb-0">Visitas últimos 30 días</h6>
+        </div>
+        <canvas id="viewsChart" style="max-height: 400px;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Top Landings Table -->
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Top 5 Landings más visitadas</h6>
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th class="pt-0">Título</th>
+                <th class="pt-0">Slug</th>
+                <th class="pt-0">Visitas</th>
+              </tr>
+            </thead>
+            <tbody id="top-landings-table">
+              <tr>
+                <td colspan="3">Cargando datos...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

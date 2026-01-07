@@ -1,0 +1,95 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">Métricas Globales</h3>
+  </div>
+
+  <!-- Cards -->
+  <div class="row">
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <h6 class="card-title mb-0">Usuarios Totales</h6>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-12 col-xl-5">
+              <h3 class="mb-2" id="metric-users">0</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <h6 class="card-title mb-0">Landings Creadas</h6>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-12 col-xl-5">
+              <h3 class="mb-2" id="metric-landings">0</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <h6 class="card-title mb-0">Visitas Globales</h6>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-12 col-xl-5">
+              <h3 class="mb-2" id="metric-views">0</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <h6 class="card-title mb-0">Leads Generados</h6>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-12 col-xl-5">
+              <h3 class="mb-2" id="metric-leads">0</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="row">
+    <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline mb-2">
+            <h6 class="card-title mb-0">Visualizaciones (Últimos 30 días)</h6>
+          </div>
+          <p class="text-muted mb-4">Tendencia de tráfico en toda la plataforma.</p>
+          <div style="position: relative; height:300px; width:100%">
+             <canvas id="viewsChartGlobal"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline mb-2">
+            <h6 class="card-title mb-0">Usuarios por Rol</h6>
+          </div>
+          <div style="position: relative; height:300px; width:100%; display: flex; justify-content: center;">
+             <canvas id="rolesChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

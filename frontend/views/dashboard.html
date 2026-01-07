@@ -1,0 +1,349 @@
+<div class="container-fluid p-0">
+    <!-- Header Welcome -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+        <div>
+            <!-- Reusing id="user-role" for compatibility with dashboard.js -->
+            <h3 class="mb-1 fw-bold text-dark">Hola, <span id="user-role" class="text-primary">Usuario</span>! 👋</h3>
+            <p class="text-muted mb-0">Bienvenido a su Panel de Control de In-Pages.</p>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="bg-white p-2 rounded shadow-sm border">
+                <span class="text-muted small text-uppercase fw-bold me-2">Fecha:</span>
+                <span class="fw-bold text-dark" id="currentDate">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUPERUSER CONTENT (Oculto por defecto, se muestra via JS) -->
+    <div id="contentSuperUser" style="display:none;">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h5 class="text-muted fw-bold text-uppercase fs-7 mb-3">Administración General</h5>
+            </div>
+
+            <!-- Landings Totales -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0 cursor-pointer"
+                    onclick="document.querySelector('[data-page=landings]').click()">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="layout" class="text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Landings Totales</h6>
+                            <small class="text-muted">Gestionar todas las páginas</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usuarios -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0 cursor-pointer"
+                    onclick="document.querySelector('[data-page=usuarios]').click()">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="users" class="text-info"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Usuarios</h6>
+                            <small class="text-muted">Gestionar cuentas</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Métricas -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0 cursor-pointer"
+                    onclick="document.querySelector('[data-page=metricas]').click()">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="bar-chart-2" class="text-success"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Métricas</h6>
+                            <small class="text-muted">Estadísticas globales</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuración -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0 cursor-pointer"
+                    onclick="document.querySelector('[data-page=configuracion]').click()">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="settings" class="text-secondary"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Configuración</h6>
+                            <small class="text-muted">Ajustes generales</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENT CONTENT (Wrapper para ocultar si es superuser) -->
+    <div id="contentClient" style="display:none;">
+        <!-- Hero / CTA Section -->
+        <div class="row mb-4">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card border-0 position-relative overflow-hidden text-white"
+                    style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 1rem;">
+                    <!-- Decorative Circles -->
+                    <div
+                        style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border-radius: 50%;">
+                    </div>
+                    <div
+                        style="position: absolute; bottom: -30px; left: 10%; width: 100px; height: 100px; background: rgba(255,255,255,0.05); border-radius: 50%;">
+                    </div>
+
+                    <div
+                        class="card-body p-xl-5 p-4 d-flex flex-column flex-md-row align-items-center justify-content-between position-relative z-1">
+                        <div class="me-md-4 mb-4 mb-md-0 text-center text-md-start">
+                            <h2 class="mb-3 fw-bold" style="font-family: 'Overpass', sans-serif;">Diseña Landing
+                                Pages de Alto Impacto</h2>
+                            <p class="mb-4 text-light opacity-75" style="max-width: 500px; font-size: 1.1rem;">
+                                Sin código. Sin complicaciones. Usa nuestro constructor visual para lanzar tu
+                                próxima campaña en minutos.
+                            </p>
+                        </div>
+                        <!-- Hero Image Illustration (Icon Fallback) -->
+                        <div class="d-none d-md-block opacity-50">
+                            <i data-feather="layout" class="text-white"
+                                style="width: 180px; height: 180px; stroke-width: 1px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Steps / Educational Strip -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h5 class="text-muted fw-bold text-uppercase fs-7 mb-3">Flujo de Trabajo</h5>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card border-0 h-100 shadow-sm hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3"
+                            style="width: 60px; height: 60px; background-color: rgba(37, 99, 235, 0.1);">
+                            <i data-feather="monitor" style="width: 24px; height: 24px; color: #ffffff;"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">1. Diseña</h5>
+                        <p class="text-muted small mb-0">Usa el editor de arrastrar y soltar para personalizar cada
+                            sección a tu gusto.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card border-0 h-100 shadow-sm hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle mb-3"
+                            style="width: 60px; height: 60px; background-color: rgba(16, 185, 129, 0.1);">
+                            <i data-feather="image" style="width: 24px; height: 24px; color: #ffffff;"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">2. Personaliza</h5>
+                        <p class="text-muted small mb-0">Agrega imágenes, colores, textos y formularios de contacto
+                            optimizados.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 h-100 shadow-sm hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-info bg-opacity-10 text-info rounded-circle mb-3"
+                            style="width: 60px; height: 60px; background-color: rgba(6, 182, 212, 0.1);">
+                            <i data-feather="globe" style="width: 24px; height: 24px; color: #ffffff;"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">3. Publica</h5>
+                        <p class="text-muted small mb-0">Define tu link único y comparte tu página con el mundo al
+                            instante.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Grid (Builder Blocks Preview) -->
+        <div class="row">
+            <div class="col-12">
+                <h5 class="text-muted fw-bold text-uppercase fs-7 mb-3">Bloques Disponibles en el Editor</h5>
+            </div>
+
+            <!-- Hero -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="layout" class="text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Hero</h6>
+                            <small class="text-muted">Cabecera Principal</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="monitor" class="text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Navbar</h6>
+                            <small class="text-muted">Menú de Navegación</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="grid" class="text-success"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Características</h6>
+                            <small class="text-muted">Grilla de Servicios</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="message-circle" class="text-info"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Testimonios</h6>
+                            <small class="text-muted">Prueba Social</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="tag" class="text-warning"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Precios</h6>
+                            <small class="text-muted">Tabla de Planes</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="mail" class="text-danger"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Formulario</h6>
+                            <small class="text-muted">Captura de Leads</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="share-2" class="text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Redes Sociales</h6>
+                            <small class="text-muted">Enlaces a Perfiles</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-body d-flex align-items-center opacity-75">
+                        <div class="bg-light p-3 rounded me-3">
+                            <i data-feather="arrow-down-circle" class="text-secondary"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Pie de Página</h6>
+                            <small class="text-muted">Links y Copyright</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12 stretch-card">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="card-title fw-bold text-dark mb-0">Mis Proyectos Recientes</h6>
+                            <a href="#" data-page="dashboard" class="btn btn-sm btn-link">Ver todos</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="dashboard-table">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="pt-0 border-0">Título</th>
+                                        <th class="pt-0 border-0">URL (Slug)</th>
+                                        <th class="pt-0 border-0">Estado</th>
+                                        <th class="pt-0 border-0">Fecha</th>
+                                        <th class="pt-0 border-0">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-5">
+                                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                            </div> Cargando proyectos...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- End contentClient -->
+
+</div>
+
+<style>
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
