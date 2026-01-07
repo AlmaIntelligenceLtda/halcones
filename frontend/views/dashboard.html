@@ -111,6 +111,9 @@
                                 Sin código. Sin complicaciones. Usa nuestro constructor visual para lanzar tu
                                 próxima campaña en minutos.
                             </p>
+                            <button class="btn btn-light text-primary fw-bold px-4 py-2" onclick="crearNuevaLanding()">
+                                <i data-feather="plus-circle" class="me-2"></i>Crear Nueva Landing
+                            </button>
                         </div>
                         <!-- Hero Image Illustration (Icon Fallback) -->
                         <div class="d-none d-md-block opacity-50">
@@ -301,7 +304,12 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="card-title fw-bold text-dark mb-0">Mis Proyectos Recientes</h6>
-                            <a href="#" data-page="dashboard" class="btn btn-sm btn-link">Ver todos</a>
+                            <div>
+                                <button onclick="crearNuevaLanding()" class="btn btn-primary btn-sm me-2">
+                                    <i data-feather="plus"></i> Crear Landing
+                                </button>
+                                <a href="#" data-page="landings" class="btn btn-sm btn-link">Ver todas</a>
+                            </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover mb-0" id="dashboard-table">

@@ -3,7 +3,12 @@
     try {
       const res = await fetch("/api/landings/all");
       if (!res.ok) {
-        throw new Error("Error al obtener landings");
+        let msg = "Error al obtener landings";
+        try {
+            const errData = await res.json();
+            if(errData.error) msg = errData.error;
+        } catch(e) {}
+        throw new Error(msg);
       }
       const landings = await res.json();
 
@@ -55,9 +60,10 @@
 
     } catch (err) {
       console.error("Error cargando landings:", err);
-      // Podríamos mostrar un mensaje en la tabla si falla
       const tbody = document.querySelector("#tablaLandingsTotales tbody");
-      tbody.innerHTML = `<tr><td colspan="7" class="text-danger text-center">Error al cargar datos</td></tr>`;
+      // Colspan adjusted to 8 to match header
+      const msg = err.message || "Error desconocido";
+      tbody.innerHTML = `<tr><td colspan="8" class="text-danger text-center">Error al cargar datos: ${msg}</td></tr>`;
     }
   }
 
