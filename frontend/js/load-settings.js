@@ -31,6 +31,7 @@
 
     // 2. Site Name
     if (settings.site_name) {
+      if (settings.site_name === 'InPages') settings.site_name = 'Halcones';
       document.title = settings.site_name; // Browser Tab Title
       
       // Update sidebar logo or other .site-name elements
