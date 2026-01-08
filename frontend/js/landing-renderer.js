@@ -3,8 +3,34 @@ const LandingRenderer = {
         theme: {
             primary: '#2563eb',
             secondary: '#1e293b',
-            font: 'Overpass, sans-serif'
+            accent: '#f59e0b',
+            bg: '#ffffff',
+            text: '#334155',
+            font: "'Overpass', sans-serif",
+            headingFont: "'Overpass', sans-serif",
+            radius: '0.5rem',
+            shadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+            container: '1200px',
+            spacing: '4rem'
         }
+    },
+
+    ensureFontLoaded(fontFamily) {
+        const ff = (fontFamily || '').toLowerCase();
+        const needsPoppins = ff.includes('poppins');
+        const needsInter = ff.includes('inter');
+        let href = null;
+        if (needsPoppins) href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap';
+        else if (needsInter) href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap';
+        if (!href) return;
+
+        const id = `lp-font-${needsPoppins ? 'poppins' : 'inter'}`;
+        if (document.getElementById(id)) return;
+        const link = document.createElement('link');
+        link.id = id;
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
     },
 
     render(containerId, schema) {
@@ -29,6 +55,11 @@ const LandingRenderer = {
                     const section = document.createElement('section');
                     section.className = 'landing-section';
                     section.dataset.blockType = block.type;
+                    const isV2 = (block.type || '').endsWith('_v2');
+                    if (isV2) {
+                        section.style.padding = '0';
+                        section.dataset.noAnimate = '1';
+                    }
                     section.innerHTML = renderer(block.data);
                     container.appendChild(section);
 
@@ -64,8 +95,21 @@ const LandingRenderer = {
         
         root.style.setProperty('--lp-primary', t.primary);
         root.style.setProperty('--lp-secondary', t.secondary);
-        if (t.font) root.style.setProperty('--lp-font-main', t.font);
-        if (t.font) root.style.setProperty('--lp-font-heading', t.font);
+        if (t.accent) root.style.setProperty('--lp-accent', t.accent);
+        if (t.bg) root.style.setProperty('--lp-bg', t.bg);
+        if (t.text) root.style.setProperty('--lp-text', t.text);
+        if (t.font) {
+            root.style.setProperty('--lp-font-main', t.font);
+            this.ensureFontLoaded(t.font);
+        }
+        if (t.headingFont) {
+            root.style.setProperty('--lp-font-heading', t.headingFont);
+            this.ensureFontLoaded(t.headingFont);
+        }
+        if (t.spacing) root.style.setProperty('--lp-spacing', t.spacing);
+        if (t.radius) root.style.setProperty('--lp-radius', t.radius);
+        if (t.shadow) root.style.setProperty('--lp-shadow', t.shadow);
+        if (t.container) root.style.setProperty('--lp-container', t.container);
     },
 
     renderMap: {
@@ -288,6 +332,223 @@ const LandingRenderer = {
                     `).join('')}
                 </div>
             </div>
+        `,
+
+        // ---------------- Demo.html equivalent blocks (V2) ----------------
+        header_v2: (data) => {
+            const s = data.style || {};
+            const bg = s.backgroundColor || '#ffffff';
+            const opacity = (typeof s.backgroundOpacity === 'number') ? s.backgroundOpacity : 1;
+            const blur = (typeof s.blurPx === 'number') ? s.blurPx : 0;
+            const paddingY = (typeof s.paddingY === 'number') ? s.paddingY : 15;
+            const paddingX = (typeof s.paddingX === 'number') ? s.paddingX : 20;
+            const fixed = s.fixed ? 'fixed' : 'sticky';
+
+            const toRgba = (hex, a) => {
+                const h = (hex || '').trim();
+                if (!/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(h)) return hex;
+                const full = h.length === 4
+                    ? '#' + h[1] + h[1] + h[2] + h[2] + h[3] + h[3]
+                    : h;
+                const r = parseInt(full.slice(1, 3), 16);
+                const g = parseInt(full.slice(3, 5), 16);
+                const b = parseInt(full.slice(5, 7), 16);
+                return `rgba(${r}, ${g}, ${b}, ${a})`;
+            };
+
+            const bgComputed = toRgba(bg, opacity);
+            const logoColor = s.logoColor || 'var(--lp-primary)';
+            const linkColor = s.linkColor || 'var(--lp-primary)';
+            const linkHover = s.linkHoverColor || 'var(--lp-accent)';
+
+            const logoHtml = data.logoImage
+                ? `<img src="${data.logoImage}" alt="Logo" class="lp-header-v2__logo-img" />`
+                : `${data.logoText || ''}`;
+
+            return `
+                <div>
+                    <style>
+                        .lp-header-v2 { left: 0; width: 100%; box-sizing: border-box; }
+                        .lp-header-v2 a:hover { color: ${linkHover} !important; }
+                        body.has-builder-sidebar .lp-header-v2 { left: 300px !important; width: calc(100% - 300px) !important; }
+                        @media (max-width: 768px) { body.has-builder-sidebar .lp-header-v2 { left: 0 !important; width: 100% !important; } }
+                        .lp-header-v2__inner { max-width: var(--lp-container); margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+                        .lp-header-v2__logo { font-size: 1.5rem; font-weight: 700; }
+                        .lp-header-v2__logo-img { height: 44px; width: auto; max-width: 180px; object-fit: contain; display: block; }
+                        .lp-header-v2__nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 20px; min-width: 0; max-width: 100%; }
+                        .lp-header-v2__nav a { text-decoration: none; font-weight: 500; transition: color 0.3s; white-space: nowrap; }
+                        @media (max-width: 768px) {
+                            .lp-header-v2__inner { flex-direction: column; align-items: center; gap: 10px; }
+                            .lp-header-v2__nav { justify-content: center; }
+                            .lp-header-v2__nav a { white-space: normal; }
+                        }
+                    </style>
+                    <header class="lp-header-v2" style="background:${bgComputed}; backdrop-filter: blur(${blur}px); padding:${paddingY}px ${paddingX}px; position:${fixed}; top:0; z-index:1000; box-shadow:${s.shadow || 'none'};">
+                        <div class="lp-header-v2__inner">
+                            <div class="lp-header-v2__logo" style="color:${logoColor};">${logoHtml}</div>
+                            <nav class="lp-header-v2__nav">
+                                ${(data.links || []).map(l => `<a href="${l.url}" style="color:${linkColor};">${l.text}</a>`).join('')}
+                            </nav>
+                        </div>
+                    </header>
+                </div>
+            `;
+        },
+
+        hero_v2: (data) => {
+            const angle = (typeof data.overlayAngleDeg === 'number') ? data.overlayAngleDeg : 135;
+            const from = data.overlayFromColor || 'var(--lp-primary)';
+            const to = data.overlayToColor || 'var(--lp-accent)';
+            const fromA = (typeof data.overlayFromOpacity === 'number') ? data.overlayFromOpacity : 0.9;
+            const toA = (typeof data.overlayToOpacity === 'number') ? data.overlayToOpacity : 0.8;
+            const minVh = (typeof data.minHeightVh === 'number') ? data.minHeightVh : 70;
+            const textColor = data.textColor || '#ffffff';
+            const bgImg = data.backgroundImageUrl || '';
+
+            const rgba = (hexOrRgba, a) => {
+                const h = (hexOrRgba || '').trim();
+                if (!/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(h)) return h;
+                const full = h.length === 4
+                    ? '#' + h[1] + h[1] + h[2] + h[2] + h[3] + h[3]
+                    : h;
+                const r = parseInt(full.slice(1, 3), 16);
+                const g = parseInt(full.slice(3, 5), 16);
+                const b = parseInt(full.slice(5, 7), 16);
+                return `rgba(${r}, ${g}, ${b}, ${a})`;
+            };
+
+            const overlay = `linear-gradient(${angle}deg, ${rgba(from, fromA)} 0%, ${rgba(to, toA)} 100%)`;
+            const bg = bgImg
+                ? `${overlay}, url('${bgImg}') center/cover no-repeat`
+                : overlay;
+
+            const buttons = (data.buttons || []).map(btn => {
+                const radius = (typeof btn.radiusPx === 'number') ? `${btn.radiusPx}px` : '50px';
+                const borderW = (typeof btn.borderWidth === 'number') ? `${btn.borderWidth}px` : '0px';
+                const borderC = btn.borderColor || 'transparent';
+                const bgBtn = (btn.variant === 'primary')
+                    ? `linear-gradient(45deg, ${btn.backgroundFrom || 'var(--lp-accent)'}, ${btn.backgroundTo || 'var(--lp-accent)'})`
+                    : (btn.backgroundFrom || 'rgba(255,255,255,0.2)');
+                const shadow = btn.shadow || 'none';
+                return `
+                    <a href="${btn.url || '#'}" style="display:inline-block; text-decoration:none; padding:15px 30px; border-radius:${radius}; font-weight:600; border:${borderW} solid ${borderC}; color:${btn.textColor || textColor}; background:${bgBtn}; box-shadow:${shadow}; transition:transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;">
+                        ${btn.text || 'Botón'}
+                    </a>
+                `;
+            }).join('');
+
+            return `
+                <section id="${data.id || ''}" style="padding: 120px 20px 80px; text-align:center; color:${textColor}; background:${bg}; min-height:${minVh}vh; display:flex; align-items:center; justify-content:center;">
+                    <div class="landing-container" style="max-width:800px;">
+                        <h1 style="font-size:3rem; margin:0 0 20px; font-weight:700; text-shadow:2px 2px 4px rgba(0,0,0,0.3);">${data.headline || ''}</h1>
+                        <p style="font-size:1.3rem; margin:0 0 30px; font-weight:300;">${data.subheadline || ''}</p>
+                        <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">${buttons}</div>
+                    </div>
+                </section>
+            `;
+        },
+
+        features_v2: (data) => {
+            const min = (typeof data.columnsMinWidthPx === 'number') ? data.columnsMinWidthPx : 300;
+            const gap = (typeof data.gapPx === 'number') ? data.gapPx : 30;
+            const cards = (data.cards || []).map(card => {
+                const radius = (typeof card.radiusPx === 'number') ? `${card.radiusPx}px` : '15px';
+                const shadow = card.shadow || '0 10px 30px rgba(0,0,0,0.1)';
+                const cardBg = card.cardBg || '#ffffff';
+                const iconBg = `linear-gradient(45deg, ${card.iconBgFrom || 'var(--lp-primary)'}, ${card.iconBgTo || 'var(--lp-secondary)'})`;
+                return `
+                    <div style="background:${cardBg}; padding:40px 30px; border-radius:${radius}; box-shadow:${shadow}; text-align:center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='${shadow}';">
+                        <div style="width:80px; height:80px; background:${iconBg}; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:white; font-size:2rem;">
+                            <i data-feather="${card.icon || 'star'}"></i>
+                        </div>
+                        <h3 style="font-size:1.5rem; color: var(--lp-primary); margin:0 0 15px;">${card.title || ''}</h3>
+                        <p style="color:#666; margin:0;">${card.text || ''}</p>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <section id="${data.id || ''}" style="padding: 80px 20px;">
+                    <div class="landing-container">
+                        <h2 style="text-align:center; font-size:2.5rem; color: var(--lp-primary); margin-bottom:50px; font-weight:600;">${data.title || ''}</h2>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(${min}px, 1fr)); gap:${gap}px;">${cards}</div>
+                    </div>
+                </section>
+            `;
+        },
+
+        gallery_v2: (data) => {
+            const h = (typeof data.itemHeightPx === 'number') ? data.itemHeightPx : 200;
+            const items = (data.items || []).map(item => `
+                <div style="position:relative; border-radius:10px; overflow:hidden; height:${h}px; background-image:url('${item.imageUrl || ''}'); background-size:cover; background-position:center; background-repeat:no-repeat; display:flex; align-items:center; justify-content:center; color:white; font-weight:500; text-shadow:2px 2px 4px rgba(0,0,0,0.7); font-size:1.2rem;">
+                    ${item.label || ''}
+                </div>
+            `).join('');
+
+            return `
+                <section style="padding: 80px 20px;">
+                    <div class="landing-container">
+                        <h2 style="text-align:center; font-size:2.5rem; color: var(--lp-primary); margin-bottom:50px; font-weight:600;">${data.title || ''}</h2>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; margin-top:30px;">${items}</div>
+                    </div>
+                </section>
+            `;
+        },
+
+        testimonials_v2: (data) => {
+            const bg = data.backgroundColor || '#f8f9fa';
+            const cards = (data.items || []).map(t => `
+                <div style="background:white; padding:30px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-bottom:20px;">
+                    <p style="font-style:italic; color:#555; margin:0 0 15px;">"${t.quote || ''}"</p>
+                    <div style="font-weight:600; color: var(--lp-primary);">- ${t.author || ''}</div>
+                </div>
+            `).join('');
+
+            return `
+                <section style="background:${bg}; padding:80px 20px;">
+                    <div class="landing-container" style="max-width:1000px;">
+                        <h2 style="text-align:center; margin-bottom:50px;">${data.title || ''}</h2>
+                        ${cards}
+                    </div>
+                </section>
+            `;
+        },
+
+        contact_v2: (data) => {
+            const angle = (typeof data.bgAngleDeg === 'number') ? data.bgAngleDeg : 135;
+            const bg = `linear-gradient(${angle}deg, ${data.bgFrom || 'var(--lp-primary)'} 0%, ${data.bgTo || 'var(--lp-secondary)'} 100%)`;
+            const textColor = data.textColor || '#ffffff';
+            const buttons = (data.buttons || []).map(btn => {
+                const radius = (typeof btn.radiusPx === 'number') ? `${btn.radiusPx}px` : '25px';
+                const bgBtn = btn.bg || 'var(--lp-accent)';
+                const hoverBg = btn.hoverBg || bgBtn;
+                return `
+                    <a href="${btn.url || '#'}"
+                       style="background:${bgBtn}; color:white; padding:15px 25px; border:none; border-radius:${radius}; font-size:1rem; font-weight:600; cursor:pointer; text-decoration:none; transition: all 0.3s ease; display:inline-block;"
+                       onmouseover="this.style.background='${hoverBg}'; this.style.transform='translateY(-2px)';"
+                       onmouseout="this.style.background='${bgBtn}'; this.style.transform='translateY(0)';">
+                        ${btn.text || 'Botón'}
+                    </a>
+                `;
+            }).join('');
+
+            return `
+                <section id="${data.id || ''}" style="background:${bg}; color:${textColor}; padding:80px 20px; text-align:center;">
+                    <div class="landing-container">
+                        <h2 style="margin-bottom:20px; color:${textColor};">${data.title || ''}</h2>
+                        <p style="font-size:1.2rem; margin-bottom:40px; max-width:600px; margin-left:auto; margin-right:auto;">${data.text || ''}</p>
+                        <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">${buttons}</div>
+                    </div>
+                </section>
+            `;
+        },
+
+        footer_v2: (data) => `
+            <footer style="background:${data.backgroundColor || 'var(--lp-primary)'}; color:${data.textColor || '#fff'}; padding:30px 20px; text-align:center;">
+                <div class="landing-container">
+                    <p style="margin:0; font-size:0.9rem;">${data.text || ''}</p>
+                </div>
+            </footer>
         `
     },
 
@@ -301,11 +562,12 @@ const LandingRenderer = {
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.landing-section > div').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-            observer.observe(el);
+        document.querySelectorAll('.landing-section').forEach(section => {
+            if (section.dataset.noAnimate === '1') return;
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(section);
         });
     },
 
@@ -388,10 +650,10 @@ const LandingRenderer = {
             });
 
             if (result.isConfirmed) {
-                this.submitData('pricing', { 
-                    plan: planName, 
-                    name: result.value.name, 
-                    email: result.value.email 
+                this.submitData('pricing', {
+                    plan: planName,
+                    name: result.value.name,
+                    email: result.value.email
                 });
             }
         } else {
