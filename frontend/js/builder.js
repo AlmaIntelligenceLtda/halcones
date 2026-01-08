@@ -632,6 +632,70 @@ var LandingBuilder = {
             return;
         }
 
+        // Feather icon picker
+        if ((keyName || '').toLowerCase() === 'icon' && (typeof value === 'string' || value === undefined || value === null)) {
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.alignItems = 'center';
+            row.style.gap = '0.5rem';
+            row.style.marginBottom = '1rem';
+
+            const preview = document.createElement('div');
+            preview.style.width = '34px';
+            preview.style.height = '34px';
+            preview.style.flex = '0 0 auto';
+            preview.style.border = '1px solid #475569';
+            preview.style.borderRadius = '0.5rem';
+            preview.style.background = '#1e293b';
+            preview.style.display = 'flex';
+            preview.style.alignItems = 'center';
+            preview.style.justifyContent = 'center';
+            preview.style.color = '#cbd5e1';
+
+            const setPreview = (name) => {
+                const iconsObj = window.feather?.icons;
+                preview.innerHTML = (iconsObj && name && iconsObj[name])
+                    ? iconsObj[name].toSvg({ width: 18, height: 18 })
+                    : '<span style="font-size:10px; opacity:0.8;">—</span>';
+            };
+
+            const input = document.createElement('input');
+            input.className = 'lp-control-input';
+            input.type = 'text';
+            input.value = value || '';
+            input.placeholder = 'ej. anchor';
+            input.addEventListener('input', (e) => {
+                const next = e.target.value;
+                setPreview(next);
+                onChange(next);
+            });
+
+            const pickBtn = document.createElement('button');
+            pickBtn.type = 'button';
+            pickBtn.className = 'landing-btn secondary small';
+            pickBtn.style.padding = '0.35rem 0.6rem';
+            pickBtn.style.fontSize = '0.75rem';
+            pickBtn.textContent = 'Elegir';
+            pickBtn.onclick = () => {
+                this.openFeatherIconPicker({
+                    current: input.value || '',
+                    onSelect: (name) => {
+                        input.value = name;
+                        setPreview(name);
+                        onChange(name);
+                    }
+                });
+            };
+
+            setPreview(input.value);
+            parent.appendChild(label);
+            row.appendChild(preview);
+            row.appendChild(input);
+            row.appendChild(pickBtn);
+            parent.appendChild(row);
+            return;
+        }
+
         // Long text
         let input;
         if (keyName === 'subheadline' || keyName === 'text' || (typeof value === 'string' && value.length > 80)) {
@@ -647,6 +711,140 @@ var LandingBuilder = {
         input.addEventListener('input', (e) => onChange(e.target.value));
         parent.appendChild(label);
         parent.appendChild(input);
+    },
+
+    openFeatherIconPicker({ current = '', onSelect }) {
+        const existing = document.getElementById('lp-icon-picker-modal');
+        if (existing) existing.remove();
+
+        const iconsObj = window.feather?.icons;
+        const allNames = iconsObj ? Object.keys(iconsObj) : [];
+
+        const overlay = document.createElement('div');
+        overlay.id = 'lp-icon-picker-modal';
+        overlay.style.position = 'fixed';
+        overlay.style.inset = '0';
+        overlay.style.background = 'rgba(0,0,0,0.45)';
+        overlay.style.zIndex = '100000';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'flex-start';
+        overlay.style.justifyContent = 'center';
+        overlay.style.padding = '70px 16px 16px';
+
+        const modal = document.createElement('div');
+        modal.style.width = '720px';
+        modal.style.maxWidth = '100%';
+        modal.style.background = '#0f172a';
+        modal.style.border = '1px solid #334155';
+        modal.style.borderRadius = '12px';
+        modal.style.boxShadow = '0 18px 40px rgba(0,0,0,0.45)';
+        modal.style.color = 'white';
+        modal.style.overflow = 'hidden';
+
+        const header = document.createElement('div');
+        header.style.display = 'flex';
+        header.style.alignItems = 'center';
+        header.style.justifyContent = 'space-between';
+        header.style.padding = '12px 14px';
+        header.style.borderBottom = '1px solid #334155';
+        header.innerHTML = `
+            <div style="font-weight:700;">Seleccionar Ícono</div>
+            <button type="button" class="landing-btn secondary small" style="padding:0.25rem 0.5rem; font-size:0.75rem; border-color:#475569; color:#cbd5e1;" data-action="close">Cerrar</button>
+        `;
+
+        const body = document.createElement('div');
+        body.style.padding = '14px';
+
+        const topRow = document.createElement('div');
+        topRow.style.display = 'flex';
+        topRow.style.gap = '10px';
+        topRow.style.alignItems = 'center';
+        topRow.style.marginBottom = '12px';
+
+        const search = document.createElement('input');
+        search.type = 'text';
+        search.className = 'lp-control-input';
+        search.placeholder = 'Buscar ícono...';
+        search.value = current || '';
+
+        const helper = document.createElement('div');
+        helper.style.color = '#94a3b8';
+        helper.style.fontSize = '0.75rem';
+        helper.style.whiteSpace = 'nowrap';
+        helper.textContent = iconsObj ? `${allNames.length} íconos` : 'Feather no cargó';
+
+        topRow.appendChild(search);
+        topRow.appendChild(helper);
+
+        const gridWrap = document.createElement('div');
+        gridWrap.style.maxHeight = '60vh';
+        gridWrap.style.overflow = 'auto';
+
+        const grid = document.createElement('div');
+        grid.style.display = 'grid';
+        grid.style.gridTemplateColumns = 'repeat(6, 1fr)';
+        grid.style.gap = '10px';
+
+        const renderGrid = () => {
+            grid.innerHTML = '';
+            if (!iconsObj) {
+                const empty = document.createElement('div');
+                empty.style.gridColumn = '1 / -1';
+                empty.style.color = '#94a3b8';
+                empty.style.fontSize = '0.875rem';
+                empty.textContent = 'No se pudo cargar la lista de íconos (feather.icons).';
+                grid.appendChild(empty);
+                return;
+            }
+
+            const q = (search.value || '').trim().toLowerCase();
+            const names = q ? allNames.filter(n => n.toLowerCase().includes(q)) : allNames;
+
+            names.forEach((name) => {
+                const tile = document.createElement('button');
+                tile.type = 'button';
+                tile.style.height = '86px';
+                tile.style.borderRadius = '10px';
+                tile.style.border = '1px solid #475569';
+                tile.style.background = (name === current) ? '#1e293b' : '#111827';
+                tile.style.cursor = 'pointer';
+                tile.style.overflow = 'hidden';
+                tile.style.display = 'flex';
+                tile.style.flexDirection = 'column';
+                tile.style.alignItems = 'center';
+                tile.style.justifyContent = 'center';
+                tile.style.gap = '8px';
+                tile.style.padding = '10px';
+                tile.style.color = '#cbd5e1';
+
+                const svg = iconsObj[name].toSvg({ width: 20, height: 20 });
+                tile.innerHTML = `${svg}<div style="font-size:11px; line-height:1.1; opacity:0.9; text-align:center; word-break:break-word;">${name}</div>`;
+
+                tile.onclick = () => {
+                    if (typeof onSelect === 'function') onSelect(name);
+                    overlay.remove();
+                };
+                grid.appendChild(tile);
+            });
+        };
+
+        search.addEventListener('input', renderGrid);
+        renderGrid();
+
+        gridWrap.appendChild(grid);
+        body.appendChild(topRow);
+        body.appendChild(gridWrap);
+
+        modal.appendChild(header);
+        modal.appendChild(body);
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        const closeBtn = overlay.querySelector('[data-action="close"]');
+        closeBtn.onclick = () => overlay.remove();
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
     },
 
     renderObjectFields({ parent, title, objRef, containerId }) {
