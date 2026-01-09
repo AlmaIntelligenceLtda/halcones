@@ -129,8 +129,16 @@ app.get("/index.html", (req, res) => {
 });
 
 // Public page for a landing by slug (no auth)
-app.get("/pages/:slug", (req, res) => {
+app.get("/pages/:slug", async (req, res) => {
   if (req.params.slug === "demo") {
+    try {
+      const demoSlug = await obtenerConfig('demo_landing_slug');
+      if (demoSlug) {
+        return res.redirect(`/pages/${encodeURIComponent(demoSlug)}`);
+      }
+    } catch (e) {
+      console.error('Error resolviendo demo default:', e);
+    }
     return res.sendFile(path.join(__dirname, "../frontend/demo.html"));
   }
   res.sendFile(path.join(__dirname, "../frontend/p.html"));

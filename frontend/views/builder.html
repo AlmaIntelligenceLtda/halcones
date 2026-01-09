@@ -323,18 +323,57 @@
         padding-left: 300px;
         transition: padding-left 0.3s;
     }
+
+    /* Allow collapsing the visual editor */
+    body.builder-sidebar-collapsed {
+        padding-left: 0;
+    }
+    body.builder-sidebar-collapsed #lp-builder-sidebar {
+        overflow: hidden;
+        bottom: auto;
+        height: auto;
+    }
+    body.builder-sidebar-collapsed #lp-builder-controls,
+    body.builder-sidebar-collapsed .lp-builder-footer {
+        display: none;
+    }
+
     #lp-builder-sidebar {
         position: fixed;
         top: 0;
         left: 0;
         width: 300px;
-        height: 100vh;
+        bottom: 0;
+        height: auto;
         background: #1e293b;
         color: white;
         z-index: 9999;
         overflow-y: auto;
         box-shadow: 4px 0 10px rgba(0,0,0,0.1);
         border-right: 1px solid #334155;
+    }
+
+    /* Inline toggle (shown only on mobile) */
+    #lp-builder-toggle-btn {
+        display: none;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+        body.has-builder-sidebar {
+            padding-left: 0;
+        }
+        #lp-builder-sidebar {
+            width: 100vw;
+            max-width: 100%;
+        }
+        #lp-builder-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
     }
     .lp-builder-header {
         padding: 1.5rem;

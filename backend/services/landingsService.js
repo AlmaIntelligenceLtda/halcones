@@ -57,13 +57,38 @@ export async function obtenerLandingsPorUsuario(userId) {
   `;
 }
 
+export async function obtenerLandingPorId(id) {
+  const [landing] = await sql`
+    SELECT id, user_id, title, slug, description, is_public, data, created_at, updated_at
+    FROM landings
+    WHERE id = ${id}
+    LIMIT 1
+  `;
+  return landing || null;
+}
+
 export async function actualizarLanding(id, fields = {}) {
   const { title, description, is_public, data, slug } = fields;
   const [row] = await sql`
     UPDATE landings
-    SET title = ${title}, description = ${description}, is_public = ${is_public}, data = ${data}, slug = ${slug}, updated_at = now()
+    SET
+      title = COALESCE(${title}, title),
+      description = COALESCE(${description}, description),
+      is_public = COALESCE(${is_public}, is_public),
+      data = COALESCE(${data}, data),
+      slug = COALESCE(${slug}, slug),
+      updated_at = now()
     WHERE id = ${id}
     RETURNING id, user_id, title, slug, description, is_public, data, updated_at
+  `;
+  return row || null;
+}
+
+export async function eliminarLanding(id) {
+  const [row] = await sql`
+    DELETE FROM landings
+    WHERE id = ${id}
+    RETURNING id
   `;
   return row || null;
 }

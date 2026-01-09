@@ -8,9 +8,11 @@ import {
   crearLanding,
   obtenerTodasLasLandings,
   obtenerLandingPorSlug,
+  obtenerLandingPorId,
   listarLandingsPublicos,
   obtenerLandingsPorUsuario,
   actualizarLanding,
+  eliminarLanding,
   crearMedia,
   eliminarMedia,
   registrarLead
@@ -61,9 +63,20 @@ const storage = multer.diskStorage({
 // File validation and limits
 const upload = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+  // 100 MB (videos nativos suelen ser más pesados)
+  limits: { fileSize: 100 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
-    const allowed = ["image/jpeg", "image/png", "image/gif", "video/mp4"];
+    const allowed = [
+      // Images
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+      // Videos
+      "video/mp4",
+      "video/webm",
+      "video/quicktime"
+    ];
     if (allowed.includes(file.mimetype)) return cb(null, true);
     return cb(new Error("INVALID_FILE_TYPE"));
   }
@@ -174,14 +187,82 @@ router.post("/", async (req, res) => {
 // Auth: update landing
 router.put("/:id", async (req, res) => {
   try {
-    verifyToken(req);
+    const decoded = verifyToken(req);
     const id = Number(req.params.id);
+
+    const landing = await obtenerLandingPorId(id);
+    if (!landing) return res.status(404).json({ error: "Landing no encontrada" });
+
+    // Owner or superusuario
+    if (decoded.rol !== 'superusuario' && landing.user_id !== decoded.id) {
+      return res.status(403).json({ error: "No tienes permiso" });
+    }
+
     const updated = await actualizarLanding(id, req.body);
     if (!updated) return res.status(404).json({ error: "Landing no encontrada" });
     res.json(updated);
   } catch (err) {
+    if (err?.message === 'NO_TOKEN') return res.status(401).json({ error: 'No autenticado' });
+    if (err?.name === 'JsonWebTokenError' || err?.name === 'TokenExpiredError') {
+      return res.status(403).json({ error: 'Token inválido' });
+    }
     console.error("❌ Error actualizando landing:", err);
     res.status(500).json({ error: "Error actualizando landing" });
+  }
+});
+
+// Auth: change landing status (publish/unpublish)
+router.patch("/:id/status", async (req, res) => {
+  try {
+    const decoded = verifyToken(req);
+    const id = Number(req.params.id);
+    const { is_public } = req.body || {};
+
+    if (typeof is_public !== 'boolean') {
+      return res.status(400).json({ error: "is_public debe ser boolean" });
+    }
+
+    const landing = await obtenerLandingPorId(id);
+    if (!landing) return res.status(404).json({ error: "Landing no encontrada" });
+
+    if (decoded.rol !== 'superusuario' && landing.user_id !== decoded.id) {
+      return res.status(403).json({ error: "No tienes permiso" });
+    }
+
+    const updated = await actualizarLanding(id, { is_public });
+    res.json(updated);
+  } catch (err) {
+    if (err?.message === 'NO_TOKEN') return res.status(401).json({ error: 'No autenticado' });
+    if (err?.name === 'JsonWebTokenError' || err?.name === 'TokenExpiredError') {
+      return res.status(403).json({ error: 'Token inválido' });
+    }
+    console.error("❌ Error cambiando estado de landing:", err);
+    res.status(500).json({ error: "Error actualizando estado" });
+  }
+});
+
+// Auth: delete landing
+router.delete("/:id", async (req, res) => {
+  try {
+    const decoded = verifyToken(req);
+    const id = Number(req.params.id);
+
+    const landing = await obtenerLandingPorId(id);
+    if (!landing) return res.status(404).json({ error: "Landing no encontrada" });
+
+    if (decoded.rol !== 'superusuario' && landing.user_id !== decoded.id) {
+      return res.status(403).json({ error: "No tienes permiso" });
+    }
+
+    const deleted = await eliminarLanding(id);
+    res.json({ success: !!deleted });
+  } catch (err) {
+    if (err?.message === 'NO_TOKEN') return res.status(401).json({ error: 'No autenticado' });
+    if (err?.name === 'JsonWebTokenError' || err?.name === 'TokenExpiredError') {
+      return res.status(403).json({ error: 'Token inválido' });
+    }
+    console.error("❌ Error eliminando landing:", err);
+    res.status(500).json({ error: "Error eliminando landing" });
   }
 });
 
@@ -192,7 +273,7 @@ router.post("/:id/media", upload.single("file"), async (req, res) => {
     const landingId = Number(req.params.id);
     if (!req.file) return res.status(400).json({ error: "Archivo requerido" });
     const filename = req.file.filename;
-    const relPath = `/uploads/landings/${filename}`;
+    const relUrl = `/uploads/landings/${filename}`;
 
     // If image, generate thumbnail
     if (req.file.mimetype.startsWith("image/")) {
@@ -206,7 +287,14 @@ router.post("/:id/media", upload.single("file"), async (req, res) => {
       }
     }
 
-    const media = await crearMedia(landingId, { type: req.body.type || (req.file.mimetype.startsWith("image/") ? "image" : "video"), path: relPath, metadata: { mimetype: req.file.mimetype, size: req.file.size }, position: Number(req.body.position) || 0 });
+    const mediaType = req.body.type || (req.file.mimetype.startsWith("image/") ? "image" : "video");
+    const media = await crearMedia(landingId, {
+      type: mediaType,
+      path: relUrl,
+      url: relUrl,
+      metadata: { mimetype: req.file.mimetype, size: req.file.size },
+      position: Number(req.body.position) || 0
+    });
     res.json(media);
   } catch (err) {
     console.error("❌ Error subiendo media:", err);

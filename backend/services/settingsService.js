@@ -34,3 +34,31 @@ export async function actualizarConfiguraciones(settingsObj) {
   
   return results;
 }
+
+// Insert/Update single config key (allows introducing new keys without a migration)
+export async function upsertConfig({
+  key,
+  value,
+  type = 'string',
+  category = 'general',
+  label = null,
+  description = null
+}) {
+  if (!key) throw new Error('KEY_REQUIRED');
+
+  const normalizedValue = value === null || typeof value === 'undefined' ? null : String(value);
+
+  const [row] = await sql`
+    INSERT INTO settings (key, value, type, category, label, description, updated_at)
+    VALUES (${key}, ${normalizedValue}, ${type}, ${category}, ${label}, ${description}, NOW())
+    ON CONFLICT (key) DO UPDATE SET
+      value = EXCLUDED.value,
+      type = COALESCE(EXCLUDED.type, settings.type),
+      category = COALESCE(EXCLUDED.category, settings.category),
+      label = COALESCE(EXCLUDED.label, settings.label),
+      description = COALESCE(EXCLUDED.description, settings.description),
+      updated_at = NOW()
+    RETURNING key, value
+  `;
+  return row;
+}

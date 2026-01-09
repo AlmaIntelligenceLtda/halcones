@@ -199,34 +199,66 @@ var LandingBuilder = {
 
     // Block Templates for New Sections
     templates: {
+        // Canonical section buttons (create V2 blocks under the hood)
         hero: {
-            type: 'hero',
+            type: 'hero_v2',
             data: {
-                headline: 'Nuevo Hero Section',
+                id: 'home',
+                headline: 'Nueva portada',
                 subheadline: 'Describe tu propuesta de valor aquí.',
-                ctaText: 'Llamada a la acción',
-                ctaLink: '#',
-                image: 'https://via.placeholder.com/800x600'
+                headlineFont: "'Poppins', 'Overpass', sans-serif",
+                headlineSizePx: 48,
+                headlineWeight: 700,
+                headlineColor: '#ffffff',
+                subheadlineFont: "'Poppins', 'Overpass', sans-serif",
+                subheadlineSizePx: 21,
+                subheadlineWeight: 300,
+                subheadlineColor: '#ffffff',
+                backgroundImageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1350&q=80',
+                overlayAngleDeg: 135,
+                overlayFromColor: '#1e3a8a',
+                overlayFromOpacity: 0.90,
+                overlayToColor: '#f59e0b',
+                overlayToOpacity: 0.80,
+                minHeightVh: 70,
+                textColor: '#ffffff',
+                buttons: [
+                    {
+                        text: 'Llamada a la acción',
+                        url: '#',
+                        variant: 'primary',
+                        backgroundFrom: '#f59e0b',
+                        backgroundTo: '#d97706',
+                        textColor: '#ffffff',
+                        borderColor: '#f59e0b',
+                        borderWidth: 0,
+                        radiusPx: 50,
+                        shadow: '0 4px 15px rgba(245,158,11,0.3)'
+                    }
+                ]
             }
         },
         features: {
-            type: 'features',
+            type: 'features_v2',
             data: {
                 id: 'features',
                 title: 'Características Principales',
-                items: [
-                    { icon: 'check', title: 'Característica 1', text: 'Descripción breve.' },
-                    { icon: 'check', title: 'Característica 2', text: 'Descripción breve.' },
-                    { icon: 'check', title: 'Característica 3', text: 'Descripción breve.' }
+                columnsMinWidthPx: 300,
+                gapPx: 30,
+                cards: [
+                    { icon: 'check', title: 'Característica 1', text: 'Descripción breve.', iconBgFrom: '#667eea', iconBgTo: '#764ba2', cardBg: '#ffffff', radiusPx: 15, shadow: '0 10px 30px rgba(0,0,0,0.1)' },
+                    { icon: 'check', title: 'Característica 2', text: 'Descripción breve.', iconBgFrom: '#667eea', iconBgTo: '#764ba2', cardBg: '#ffffff', radiusPx: 15, shadow: '0 10px 30px rgba(0,0,0,0.1)' },
+                    { icon: 'check', title: 'Característica 3', text: 'Descripción breve.', iconBgFrom: '#667eea', iconBgTo: '#764ba2', cardBg: '#ffffff', radiusPx: 15, shadow: '0 10px 30px rgba(0,0,0,0.1)' }
                 ]
             }
         },
         testimonials: {
-            type: 'testimonials',
+            type: 'testimonials_v2',
             data: {
-                id: 'testimonials',
+                title: 'Testimonios',
+                backgroundColor: '#f8f9fa',
                 items: [
-                    { quote: 'Increíble servicio, totalmente recomendado.', name: 'Juan Pérez', role: 'CEO, Empresa X' }
+                    { quote: 'Increíble servicio, totalmente recomendado.', author: 'Juan Pérez' }
                 ]
             }
         },
@@ -236,8 +268,8 @@ var LandingBuilder = {
                 id: 'pricing',
                 title: 'Nuestros Planes',
                 plans: [
-                    { name: 'Básico', price: '29', features: ['Feature 1', 'Feature 2'], cta: 'Elegir' },
-                    { name: 'Pro', price: '59', features: ['Feature 1', 'Feature 2', 'Feature 3'], cta: 'Elegir', featured: true }
+                    { name: 'Básico', price: '29', features: ['Característica 1', 'Característica 2'], cta: 'Elegir' },
+                    { name: 'Pro', price: '59', features: ['Característica 1', 'Característica 2', 'Característica 3'], cta: 'Elegir', featured: true }
                 ]
             }
         },
@@ -254,21 +286,36 @@ var LandingBuilder = {
             }
         },
         footer: {
-            type: 'footer',
+            type: 'footer_v2',
             data: {
-                copyright: '© 2024 Mi Empresa.',
+                text: '© 2026 Mi Empresa. Todos los derechos reservados.',
+                backgroundColor: '#1e3a8a',
+                textColor: '#ffffff',
                 links: [{ text: 'Aviso Legal', url: '#' }]
             }
         },
         header: {
-            type: 'header',
+            type: 'header_v2',
             data: {
-                logotext: 'Mi Logo',
+                logoText: 'Mi Logo',
+                logoImage: '',
                 links: [
-                    { text: 'Inicio', url: '#hero' },
+                    { text: 'Inicio', url: '#home' },
                     { text: 'Características', url: '#features' },
                     { text: 'Contacto', url: '#contact' }
-                ]
+                ],
+                style: {
+                    backgroundColor: '#ffffff',
+                    backgroundOpacity: 0.95,
+                    blurPx: 10,
+                    shadow: '0 2px 20px rgba(0,0,0,0.1)',
+                    fixed: true,
+                    paddingY: 15,
+                    paddingX: 20,
+                    logoColor: '#1e3a8a',
+                    linkColor: '#1e3a8a',
+                    linkHoverColor: '#f59e0b'
+                }
             }
         },
         social: {
@@ -302,14 +349,15 @@ var LandingBuilder = {
             }
         },
         gallery: {
-            type: 'gallery',
+            type: 'gallery_v2',
             data: {
                 id: 'gallery',
                 title: 'Galería de Imágenes',
-                images: [
-                    { url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80', caption: 'Workspace' },
-                    { url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80', caption: 'Team' },
-                    { url: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80', caption: 'Design' }
+                itemHeightPx: 200,
+                items: [
+                    { label: 'Workspace', imageUrl: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80' },
+                    { label: 'Team', imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80' },
+                    { label: 'Design', imageUrl: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80' }
                 ]
             }
         },
@@ -322,6 +370,23 @@ var LandingBuilder = {
                     { question: '¿El viaje incluye seguro?', answer: 'Sí, todos nuestros paquetes cuentan con seguro de viajero y asistencia 24/7 en destino.' },
                     { question: '¿Puedo cancelar mi reserva?', answer: 'Ofrecemos cancelación gratuita hasta 48 horas antes de la salida del vuelo o tour.' },
                     { question: '¿Qué métodos de pago aceptan?', answer: 'Aceptamos tarjetas de crédito, débito y planes de financiamiento para tus vacaciones.' }
+                ]
+            }
+        },
+
+        // Contacto (alias canonico) -> crea contact_v2
+        contact: {
+            type: 'contact_v2',
+            data: {
+                id: 'contact',
+                title: '¡Contáctanos!',
+                text: 'Escribe aquí tu mensaje.',
+                bgAngleDeg: 135,
+                bgFrom: '#1e3a8a',
+                bgTo: '#3b82f6',
+                textColor: '#ffffff',
+                buttons: [
+                    { text: 'WhatsApp', url: '#', bg: '#f59e0b', hoverBg: '#d97706', radiusPx: 25 }
                 ]
             }
         },
@@ -451,6 +516,225 @@ var LandingBuilder = {
     },
 
     // -------- Editor Helpers --------
+    // Labels in Spanish for UI (keep underlying schema keys/values stable)
+    blockTypeLabels: {
+        header: 'Encabezado',
+        hero: 'Portada',
+        features: 'Características',
+        testimonials: 'Testimonios',
+        pricing: 'Precios / Planes',
+        form: 'Formulario',
+        social: 'Redes Sociales',
+        video: 'Video',
+        embed: 'Embed / Incrustado',
+        gallery: 'Galería',
+        faq: 'Preguntas Frecuentes',
+
+        contact: 'Contacto',
+
+        // V2 blocks are the canonical look & feel, but we don't expose them as separate section types in UI.
+        header_v2: 'Encabezado',
+        hero_v2: 'Portada',
+        features_v2: 'Características',
+        gallery_v2: 'Galería',
+        testimonials_v2: 'Testimonios',
+        contact_v2: 'Contacto',
+        footer_v2: 'Pie de página',
+        footer: 'Pie de página'
+    },
+
+    getAddSectionTypes() {
+        // Hide *_v2 duplicates if a base template exists (header + header_v2, etc)
+        const keys = Object.keys(this.templates || {});
+        const baseSet = new Set(keys.filter(k => !String(k).endsWith('_v2')));
+        return keys.filter((k) => {
+            const key = String(k);
+            if (!key.endsWith('_v2')) return true;
+            const base = key.slice(0, -3);
+            return !baseSet.has(base);
+        });
+    },
+
+    deepClone(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    },
+
+    getDefaultDataForType(type) {
+        switch (type) {
+            case 'header_v2': return this.deepClone(this.templates.header_v2.data);
+            case 'hero_v2': return this.deepClone(this.templates.hero_v2.data);
+            case 'features_v2': return this.deepClone(this.templates.features_v2.data);
+            case 'gallery_v2': return this.deepClone(this.templates.gallery_v2.data);
+            case 'testimonials_v2': return this.deepClone(this.templates.testimonials_v2.data);
+            case 'contact_v2': return this.deepClone(this.templates.contact_v2.data);
+            case 'footer_v2': return this.deepClone(this.templates.footer_v2.data);
+            default: return {};
+        }
+    },
+
+    upgradeSchemaForBuilder(schema) {
+        if (!schema || typeof schema !== 'object') return schema;
+        if (!Array.isArray(schema.blocks)) schema.blocks = [];
+
+        schema.blocks = schema.blocks.map((block) => this.upgradeBlockForBuilder(block));
+        return schema;
+    },
+
+    upgradeBlockForBuilder(block) {
+        if (!block || typeof block !== 'object') return block;
+        const type = String(block.type || '');
+        const data = (block.data && typeof block.data === 'object') ? block.data : {};
+
+        // Already V2
+        if (type.endsWith('_v2')) return { ...block, data };
+
+        // Migrate legacy blocks to V2 equivalents (so there are no "duplicated" section systems)
+        if (type === 'header') {
+            const next = this.getDefaultDataForType('header_v2');
+            next.logoText = data.logoText || data.logotext || next.logoText;
+            next.logoImage = data.logoImage || next.logoImage || '';
+            if (Array.isArray(data.links)) next.links = this.deepClone(data.links);
+            return { type: 'header_v2', data: next };
+        }
+
+        if (type === 'hero') {
+            const next = this.getDefaultDataForType('hero_v2');
+            next.id = data.id || next.id || 'home';
+            next.headline = data.headline || next.headline;
+            next.subheadline = data.subheadline || next.subheadline;
+            next.backgroundImageUrl = data.backgroundImageUrl || data.image || next.backgroundImageUrl;
+            if (typeof data.minHeightVh === 'number') next.minHeightVh = data.minHeightVh;
+            if (data.textColor) next.textColor = data.textColor;
+
+            // Buttons: migrate old CTA if present
+            if (Array.isArray(data.buttons) && data.buttons.length) {
+                next.buttons = this.deepClone(data.buttons);
+            } else if (data.ctaText || data.ctaLink) {
+                next.buttons = [
+                    {
+                        text: data.ctaText || 'Llamada a la acción',
+                        url: data.ctaLink || '#',
+                        variant: 'primary',
+                        backgroundFrom: next.overlayToColor || '#f59e0b',
+                        backgroundTo: '#d97706',
+                        textColor: next.textColor || '#ffffff',
+                        borderColor: next.overlayToColor || '#f59e0b',
+                        borderWidth: 0,
+                        radiusPx: 50,
+                        shadow: '0 4px 15px rgba(245,158,11,0.3)'
+                    }
+                ];
+            }
+            return { type: 'hero_v2', data: next };
+        }
+
+        if (type === 'features') {
+            const next = this.getDefaultDataForType('features_v2');
+            next.id = data.id || next.id || 'features';
+            next.title = data.title || next.title;
+            if (typeof data.columnsMinWidthPx === 'number') next.columnsMinWidthPx = data.columnsMinWidthPx;
+            if (typeof data.gapPx === 'number') next.gapPx = data.gapPx;
+
+            const items = Array.isArray(data.items) ? data.items : [];
+            next.cards = items.map((it) => {
+                const card = {
+                    icon: it.icon || 'star',
+                    title: it.title || '',
+                    text: it.text || '',
+                    iconBgFrom: it.iconBgFrom || '#667eea',
+                    iconBgTo: it.iconBgTo || '#764ba2',
+                    cardBg: it.cardBg || '#ffffff',
+                    radiusPx: (typeof it.radiusPx === 'number') ? it.radiusPx : 15,
+                    shadow: it.shadow || '0 10px 30px rgba(0,0,0,0.1)'
+                };
+                // Preserve legacy optional image field if present
+                if (it.image && !it.imageUrl) card.imageUrl = it.image;
+                if (it.imageUrl) card.imageUrl = it.imageUrl;
+                return card;
+            });
+            return { type: 'features_v2', data: next };
+        }
+
+        if (type === 'gallery') {
+            const next = this.getDefaultDataForType('gallery_v2');
+            next.id = data.id || next.id || 'gallery';
+            next.title = data.title || next.title;
+            if (typeof data.itemHeightPx === 'number') next.itemHeightPx = data.itemHeightPx;
+
+            const images = Array.isArray(data.images) ? data.images : [];
+            next.items = images.map((img) => ({
+                label: img.caption || img.label || '',
+                imageUrl: img.url || img.imageUrl || ''
+            }));
+            return { type: 'gallery_v2', data: next };
+        }
+
+        if (type === 'testimonials') {
+            const next = this.getDefaultDataForType('testimonials_v2');
+            next.title = data.title || next.title;
+            if (data.backgroundColor) next.backgroundColor = data.backgroundColor;
+            const items = Array.isArray(data.items) ? data.items : [];
+            next.items = items.map((it) => {
+                const author = it.author || it.name || '';
+                const role = it.role ? `, ${it.role}` : '';
+                return {
+                    quote: it.quote || '',
+                    author: `${author}${role}`.trim().replace(/^,\s*/, '')
+                };
+            });
+            return { type: 'testimonials_v2', data: next };
+        }
+
+        if (type === 'footer') {
+            const next = this.getDefaultDataForType('footer_v2');
+            next.text = data.text || data.copyright || next.text;
+            if (data.backgroundColor) next.backgroundColor = data.backgroundColor;
+            if (data.textColor) next.textColor = data.textColor;
+            if (Array.isArray(data.links)) next.links = this.deepClone(data.links);
+            return { type: 'footer_v2', data: next };
+        }
+
+        return { ...block, data };
+    },
+
+    getBlockTypeLabel(type) {
+        if (!type) return '';
+        return this.blockTypeLabels[type] || this.createFieldLabel(String(type));
+    },
+
+    isNativeVideoUrl(url) {
+        const src = (url || '').trim().toLowerCase();
+        return src.startsWith('/uploads/') || src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov');
+    },
+
+    async uploadNativeMedia(file, forcedType = null) {
+        if (!this.currentLanding?.id) throw new Error('Primero guarda la landing para poder subir archivos.');
+
+        const type = forcedType || ((file?.type || '').startsWith('image/') ? 'image' : 'video');
+        const form = new FormData();
+        form.append('file', file);
+        form.append('type', type);
+
+        const res = await fetch(`/api/landings/${this.currentLanding.id}/media`, {
+            method: 'POST',
+            body: form
+        });
+
+        if (!res.ok) {
+            let msg = 'No se pudo subir el archivo.';
+            try {
+                const j = await res.json();
+                if (j?.error) msg = j.error;
+            } catch {}
+            throw new Error(msg);
+        }
+
+        const media = await res.json();
+        if (!Array.isArray(this.currentLanding.media)) this.currentLanding.media = [];
+        this.currentLanding.media.push(media);
+        return media;
+    },
+
     ensureFontLoaded(fontFamily) {
         // Best-effort: if the selected font is a Google font (e.g. Poppins/Inter), load it.
         // No-op if it already exists; safe if offline (falls back to next font).
@@ -481,12 +765,128 @@ var LandingBuilder = {
     },
 
     createFieldLabel(key) {
-        return key
+        const map = {
+            // Common
+            id: 'ID',
+            title: 'Título',
+            text: 'Texto',
+            description: 'Descripción',
+            url: 'URL',
+            image: 'Imagen',
+            imageUrl: 'URL de la imagen',
+            videoUrl: 'URL del video',
+            backgroundImageUrl: 'Imagen de fondo (URL)',
+            htmlCode: 'Código HTML',
+
+            // Hero
+            headline: 'Titular',
+            subheadline: 'Subtítulo',
+            headlineFont: 'Fuente (titular)',
+            headlineSizePx: 'Tamaño (titular) px',
+            headlineWeight: 'Grosor (titular)',
+            headlineColor: 'Color (titular)',
+            subheadlineFont: 'Fuente (subtítulo)',
+            subheadlineSizePx: 'Tamaño (subtítulo) px',
+            subheadlineWeight: 'Grosor (subtítulo)',
+            subheadlineColor: 'Color (subtítulo)',
+            ctaText: 'Texto del botón',
+            ctaLink: 'Enlace del botón',
+            buttons: 'Botones',
+
+            // Header
+            logotext: 'Texto del logo',
+            logoText: 'Texto del logo',
+            logoImage: 'Imagen del logo',
+            links: 'Enlaces',
+
+            // Features / cards
+            items: 'Elementos',
+            cards: 'Tarjetas',
+            icon: 'Ícono',
+            label: 'Etiqueta',
+            caption: 'Leyenda',
+
+            // Testimonials
+            quote: 'Cita',
+            name: 'Nombre',
+            role: 'Cargo',
+            author: 'Autor',
+            avatar: 'Avatar',
+
+            // Pricing
+            plans: 'Planes',
+            price: 'Precio',
+            features: 'Características',
+            featured: 'Destacado',
+            cta: 'Texto del botón',
+
+            // Form
+            fields: 'Campos',
+            type: 'Tipo',
+            placeholder: 'Placeholder',
+            submitText: 'Texto de envío',
+
+            // Theme/style
+            primary: 'Color primario',
+            secondary: 'Color secundario',
+            accent: 'Color acento',
+            bg: 'Fondo',
+            textColor: 'Color del texto',
+            text: 'Texto',
+            font: 'Fuente',
+            headingFont: 'Fuente de títulos',
+            radius: 'Borde redondeado',
+            shadow: 'Sombra',
+            container: 'Ancho de contenedor',
+            spacing: 'Espaciado',
+
+            // V2 style keys
+            style: 'Estilo',
+            backgroundColor: 'Color de fondo',
+            backgroundOpacity: 'Opacidad del fondo',
+            blurPx: 'Desenfoque (px)',
+            paddingY: 'Padding vertical (px)',
+            paddingX: 'Padding horizontal (px)',
+            logoColor: 'Color del logo',
+            linkColor: 'Color de links',
+            linkHoverColor: 'Color hover de links',
+            fixed: 'Fijo',
+
+            overlayAngleDeg: 'Ángulo del overlay (°)',
+            overlayFromColor: 'Overlay color inicio',
+            overlayFromOpacity: 'Overlay opacidad inicio',
+            overlayToColor: 'Overlay color fin',
+            overlayToOpacity: 'Overlay opacidad fin',
+            minHeightVh: 'Altura mínima (vh)',
+
+            columnsMinWidthPx: 'Ancho mínimo de columna (px)',
+            gapPx: 'Separación (px)',
+            radiusPx: 'Radio (px)',
+            borderWidth: 'Ancho del borde',
+            borderColor: 'Color del borde',
+            backgroundFrom: 'Fondo (inicio)',
+            backgroundTo: 'Fondo (fin)',
+            iconBgFrom: 'Fondo ícono (inicio)',
+            iconBgTo: 'Fondo ícono (fin)',
+            cardBg: 'Fondo de tarjeta',
+            itemHeightPx: 'Alto del elemento (px)',
+            bgAngleDeg: 'Ángulo del fondo (°)',
+            bgFrom: 'Fondo (inicio)',
+            bgTo: 'Fondo (fin)',
+            hoverBg: 'Fondo hover'
+        };
+
+        if (Object.prototype.hasOwnProperty.call(map, key)) return map[key];
+
+        return String(key)
+            .replace(/_/g, ' ')
             .replace(/([A-Z])/g, ' $1')
+            .replace(/\s+/g, ' ')
+            .trim()
             .replace(/^./, str => str.toUpperCase());
     },
 
-    renderAnyField({ parent, labelText, value, onChange, keyName }) {
+    renderAnyField({ parent, labelText, value, onChange, keyName, mediaHint = null }) {
         const label = document.createElement('label');
         label.className = 'lp-control-label';
         label.innerText = labelText;
@@ -513,6 +913,26 @@ var LandingBuilder = {
                 'globe',
                 'phone'
             ]
+        };
+
+        const enumLabels = {
+            variant: {
+                primary: 'Primario',
+                secondary: 'Secundario'
+            },
+            platform: {
+                facebook: 'Facebook',
+                twitter: 'Twitter / X',
+                instagram: 'Instagram',
+                linkedin: 'LinkedIn',
+                youtube: 'YouTube',
+                github: 'GitHub',
+                phone: 'Teléfono',
+                mail: 'Correo',
+                globe: 'Web',
+                link: 'Enlace',
+                'message-circle': 'Mensaje'
+            }
         };
 
         // Booleans
@@ -554,7 +974,9 @@ var LandingBuilder = {
             enumOptions[keyName].forEach(optVal => {
                 const opt = document.createElement('option');
                 opt.value = optVal;
-                opt.innerText = optVal;
+                opt.innerText = (enumLabels[keyName] && enumLabels[keyName][optVal])
+                    ? enumLabels[keyName][optVal]
+                    : optVal;
                 if (String(value) === optVal) opt.selected = true;
                 select.appendChild(opt);
             });
@@ -711,6 +1133,64 @@ var LandingBuilder = {
         input.addEventListener('input', (e) => onChange(e.target.value));
         parent.appendChild(label);
         parent.appendChild(input);
+
+        const k = (keyName || '').toLowerCase();
+        const isVideoField = k === 'videourl' || k.includes('video') || mediaHint === 'video';
+        const isImageField = k.includes('image') || k.includes('logo') || k.includes('avatar') || k.includes('background') || mediaHint === 'image';
+        const wantsMedia = isVideoField || isImageField;
+
+        if (wantsMedia) {
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.alignItems = 'center';
+            row.style.gap = '0.5rem';
+            row.style.marginBottom = '1rem';
+
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = isVideoField ? 'video/*' : 'image/*';
+            fileInput.className = 'lp-control-input';
+            fileInput.style.marginBottom = '0';
+
+            const uploadBtn = document.createElement('button');
+            uploadBtn.type = 'button';
+            uploadBtn.className = 'landing-btn secondary small';
+            uploadBtn.style.padding = '0.35rem 0.6rem';
+            uploadBtn.style.fontSize = '0.75rem';
+            uploadBtn.textContent = 'Subir';
+
+            uploadBtn.addEventListener('click', async () => {
+                const file = fileInput.files && fileInput.files[0];
+                if (!file) {
+                    alert('Selecciona un archivo para subir.');
+                    return;
+                }
+
+                uploadBtn.disabled = true;
+                const prevText = uploadBtn.textContent;
+                uploadBtn.textContent = 'Subiendo...';
+
+                try {
+                    const forcedType = isVideoField ? 'video' : 'image';
+                    const media = await this.uploadNativeMedia(file, forcedType);
+                    const url = media?.url || media?.path;
+                    if (url) {
+                        input.value = url;
+                        onChange(url);
+                    }
+                } catch (err) {
+                    alert(err?.message || 'No se pudo subir el archivo.');
+                } finally {
+                    uploadBtn.disabled = false;
+                    uploadBtn.textContent = prevText;
+                    fileInput.value = '';
+                }
+            });
+
+            row.appendChild(fileInput);
+            row.appendChild(uploadBtn);
+            parent.appendChild(row);
+        }
     },
 
     openFeatherIconPicker({ current = '', onSelect }) {
@@ -948,6 +1428,10 @@ var LandingBuilder = {
             this.currentSchema = this.currentLanding.data;
         }
 
+        // Unify legacy blocks into V2 (single section system in the builder)
+        this.currentSchema = this.upgradeSchemaForBuilder(this.currentSchema);
+        if (this.currentLanding) this.currentLanding.data = this.currentSchema;
+
         // Apply Theme
         this.applyTheme(this.currentSchema.theme);
 
@@ -968,6 +1452,14 @@ var LandingBuilder = {
         this.currentSchema.blocks.forEach((block, index) => {
             const renderFn = this.renderMap[block.type];
             if (renderFn) {
+                // Best-effort: load per-block fonts (headline/subheadline)
+                try {
+                    const bf = block?.data?.headlineFont;
+                    const sf = block?.data?.subheadlineFont;
+                    if (bf) this.ensureFontLoaded(bf);
+                    if (sf) this.ensureFontLoaded(sf);
+                } catch {}
+
                 const blockHtml = renderFn(block.data);
                 const section = document.createElement('div');
                 section.className = `landing-section section-${block.type}`;
@@ -987,6 +1479,11 @@ var LandingBuilder = {
                 section.style.position = 'relative';
                 
                 container.appendChild(section);
+
+                // Canvas drag & drop (reorder repeated elements inside a block)
+                try {
+                    this.wireCanvasDnD(section, index, containerId);
+                } catch {}
 
                 // Execute scripts in the block if any (required for embeds like Instagram/Twitter)
                 const scripts = section.querySelectorAll('script');
@@ -1008,6 +1505,88 @@ var LandingBuilder = {
         if (window.feather) feather.replace();
     },
 
+    getArrayRefForBlock(blockIndex, key) {
+        const block = this.currentSchema?.blocks?.[blockIndex];
+        if (!block?.data || typeof block.data !== 'object') return null;
+        const arr = block.data[key];
+        return Array.isArray(arr) ? arr : null;
+    },
+
+    wireCanvasDnD(sectionEl, blockIndex, containerId) {
+        if (!sectionEl) return;
+        const dndType = 'application/x-lp-canvas-item';
+
+        const parsePayload = (dt) => {
+            try {
+                const raw = dt.getData(dndType);
+                if (raw) return JSON.parse(raw);
+                const plain = dt.getData('text/plain') || '';
+                if (plain.startsWith('lp-canvas:')) return JSON.parse(plain.slice('lp-canvas:'.length));
+            } catch {}
+            return null;
+        };
+
+        const setOutline = (el, on) => {
+            if (!el) return;
+            el.style.outline = on ? '2px dashed rgba(148,163,184,0.75)' : 'none';
+            el.style.outlineOffset = on ? '2px' : '0';
+        };
+
+        const draggable = Array.from(sectionEl.querySelectorAll('[data-lp-dnd="1"][data-lp-dnd-key][data-lp-dnd-index]'));
+        if (draggable.length === 0) return;
+
+        draggable.forEach((el) => {
+            el.draggable = true;
+            el.style.cursor = el.style.cursor || 'grab';
+
+            el.addEventListener('dragstart', (e) => {
+                const key = el.dataset.lpDndKey;
+                const fromIndex = Number(el.dataset.lpDndIndex);
+                if (!key || !Number.isInteger(fromIndex)) return;
+                try {
+                    e.dataTransfer.effectAllowed = 'move';
+                    const payload = { blockIndex, key, fromIndex };
+                    e.dataTransfer.setData(dndType, JSON.stringify(payload));
+                    e.dataTransfer.setData('text/plain', `lp-canvas:${JSON.stringify(payload)}`);
+                } catch {}
+            });
+
+            el.addEventListener('dragover', (e) => {
+                const payload = parsePayload(e.dataTransfer);
+                if (!payload) return;
+                if (payload.blockIndex !== blockIndex) return;
+                if (payload.key !== el.dataset.lpDndKey) return;
+                e.preventDefault();
+                setOutline(el, true);
+            });
+
+            el.addEventListener('dragleave', () => setOutline(el, false));
+
+            el.addEventListener('drop', (e) => {
+                setOutline(el, false);
+                e.preventDefault();
+                e.stopPropagation();
+
+                const payload = parsePayload(e.dataTransfer);
+                if (!payload) return;
+                if (payload.blockIndex !== blockIndex) return;
+                if (payload.key !== el.dataset.lpDndKey) return;
+
+                const fromIndex = Number(payload.fromIndex);
+                const toIndex = Number(el.dataset.lpDndIndex);
+                if (!Number.isInteger(fromIndex) || !Number.isInteger(toIndex)) return;
+                if (fromIndex === toIndex) return;
+
+                const arr = this.getArrayRefForBlock(blockIndex, payload.key);
+                if (!arr) return;
+
+                this.moveArrayItem(arr, fromIndex, toIndex);
+                this.renderCanvas(containerId);
+                this.renderEditor(containerId);
+            });
+        });
+    },
+
     renderArrayField(key, array, block, containerId, parentElement) {
         const container = document.createElement('div');
         container.className = 'lp-array-container';
@@ -1022,11 +1601,11 @@ var LandingBuilder = {
 
         // Define fields based on block type
         let itemFields = ['title', 'text'];
-        let defaultItem = { title: 'Nuevo Item', text: 'Descripción' };
+        let defaultItem = { title: 'Nuevo elemento', text: 'Descripción' };
 
         if (block.type === 'features') {
             itemFields = ['icon', 'title', 'text', 'image', 'color'];
-            defaultItem = { icon: 'star', title: 'Nuevo Feature', text: 'Descripción', image: '', color: '' };
+            defaultItem = { icon: 'star', title: 'Nueva característica', text: 'Descripción', image: '', color: '' };
         } else if (block.type === 'testimonials') {
             itemFields = ['quote', 'name', 'role', 'avatar'];
             defaultItem = { quote: 'Testimonio', name: 'Nombre', role: 'Cargo', avatar: '' };
@@ -1106,7 +1685,7 @@ var LandingBuilder = {
             }
             if (k === 'items' && block.type === 'gallery_v2') {
                 itemFields = ['label', 'imageUrl'];
-                defaultItem = { label: 'Item', imageUrl: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1350&q=80' };
+                defaultItem = { label: 'Elemento', imageUrl: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1350&q=80' };
                 return true;
             }
             return false;
@@ -1131,11 +1710,42 @@ var LandingBuilder = {
             header.style.justifyContent = 'space-between';
             header.style.alignItems = 'center';
             header.style.marginBottom = '0.5rem';
+
+            // Drag handle (reorder array items)
+            const left = document.createElement('div');
+            left.style.display = 'flex';
+            left.style.alignItems = 'center';
+            left.style.gap = '0.5rem';
+
+            const dragHandle = document.createElement('span');
+            dragHandle.innerText = '≡';
+            dragHandle.title = 'Arrastrar para reordenar';
+            dragHandle.draggable = true;
+            dragHandle.style.display = 'inline-flex';
+            dragHandle.style.alignItems = 'center';
+            dragHandle.style.justifyContent = 'center';
+            dragHandle.style.width = '22px';
+            dragHandle.style.height = '22px';
+            dragHandle.style.borderRadius = '6px';
+            dragHandle.style.border = '1px solid #334155';
+            dragHandle.style.background = '#111827';
+            dragHandle.style.color = '#94a3b8';
+            dragHandle.style.cursor = 'grab';
+            dragHandle.style.userSelect = 'none';
+
+            const dndType = 'application/x-lp-array-item';
+            dragHandle.addEventListener('dragstart', (e) => {
+                try {
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData(dndType, JSON.stringify({ key, fromIndex: index }));
+                    e.dataTransfer.setData('text/plain', `lp-array:${JSON.stringify({ key, fromIndex: index })}`);
+                } catch {}
+            });
             
             const itemTitle = document.createElement('span');
             itemTitle.style.fontSize = '0.8rem';
             itemTitle.style.fontWeight = 'bold';
-            itemTitle.innerText = item.title || item.name || item.label || `Item ${index + 1}`;
+            itemTitle.innerText = item.title || item.name || item.label || `Elemento ${index + 1}`;
             
             const delBtn = document.createElement('button');
             delBtn.innerHTML = '×';
@@ -1144,22 +1754,69 @@ var LandingBuilder = {
             delBtn.style.padding = '0.1rem 0.4rem';
             delBtn.style.fontSize = '0.7rem';
             delBtn.onclick = (e) => {
-                if(confirm('¿Eliminar item?')) {
+                if(confirm('¿Eliminar elemento?')) {
                     array.splice(index, 1);
                     this.renderCanvas(containerId);
                     this.renderEditor(containerId);
                 }
             };
 
-            header.appendChild(itemTitle);
+            left.appendChild(dragHandle);
+            left.appendChild(itemTitle);
+            header.appendChild(left);
             header.appendChild(delBtn);
             itemContainer.appendChild(header);
+
+            // Drop target (reorder)
+            itemContainer.addEventListener('dragover', (e) => {
+                const raw = (() => {
+                    try { return e.dataTransfer.getData(dndType); } catch { return ''; }
+                })();
+                const rawPlain = (() => {
+                    try { return e.dataTransfer.getData('text/plain'); } catch { return ''; }
+                })();
+                if (!raw && !(rawPlain || '').startsWith('lp-array:')) return;
+                e.preventDefault();
+                itemContainer.style.outline = '2px dashed rgba(148,163,184,0.6)';
+                itemContainer.style.outlineOffset = '2px';
+            });
+            itemContainer.addEventListener('dragleave', () => {
+                itemContainer.style.outline = 'none';
+                itemContainer.style.outlineOffset = '0';
+            });
+            itemContainer.addEventListener('drop', (e) => {
+                itemContainer.style.outline = 'none';
+                itemContainer.style.outlineOffset = '0';
+
+                let payload;
+                try {
+                    const raw = e.dataTransfer.getData(dndType);
+                    if (raw) payload = JSON.parse(raw);
+                    else {
+                        const plain = e.dataTransfer.getData('text/plain') || '';
+                        payload = plain.startsWith('lp-array:') ? JSON.parse(plain.slice('lp-array:'.length)) : null;
+                    }
+                } catch {
+                    payload = null;
+                }
+                if (!payload || payload.key !== key) return;
+
+                const fromIndex = Number(payload.fromIndex);
+                const toIndex = index;
+                if (!Number.isInteger(fromIndex) || fromIndex < 0 || fromIndex >= array.length) return;
+                if (!Number.isInteger(toIndex) || toIndex < 0 || toIndex >= array.length) return;
+                if (fromIndex === toIndex) return;
+
+                this.moveArrayItem(array, fromIndex, toIndex);
+                this.renderCanvas(containerId);
+                this.renderEditor(containerId);
+            });
 
             // Fields
             const fieldsContainer = document.createElement('div');
 
             const refreshItemTitle = () => {
-                itemTitle.innerText = item.title || item.name || item.label || item.text || `Item ${index + 1}`;
+                itemTitle.innerText = item.title || item.name || item.label || item.text || `Elemento ${index + 1}`;
             };
             
             itemFields.forEach(itemKey => {
@@ -1238,6 +1895,7 @@ var LandingBuilder = {
                     labelText: this.createFieldLabel(itemKey),
                     value: val,
                     keyName: itemKey,
+                    mediaHint: (block.type === 'gallery' && itemKey === 'url') ? 'image' : null,
                     onChange: (next) => {
                         item[itemKey] = next;
                         refreshItemTitle();
@@ -1256,7 +1914,7 @@ var LandingBuilder = {
         addBtn.className = 'landing-btn secondary small';
         addBtn.style.width = '100%';
         addBtn.style.marginTop = '0.5rem';
-        addBtn.innerText = '+ Agregar Item';
+        addBtn.innerText = '+ Agregar elemento';
         addBtn.onclick = () => {
             array.push(JSON.parse(JSON.stringify(defaultItem)));
             this.renderCanvas(containerId);
@@ -1282,6 +1940,7 @@ var LandingBuilder = {
                     <h3>Editor Visual</h3>
                     <div style="display: flex; gap: 0.5rem;">
                         <a href="/pages/${this.currentLanding?.slug || ''}" target="_blank" class="landing-btn secondary small" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; text-decoration: none; display: flex; align-items: center; border-color: #94a3b8; color: white;">Ver</a>
+                        <button id="lp-builder-toggle-btn" class="landing-btn secondary small" style="border-color: #94a3b8; color: white;" onclick="LandingBuilder.toggleSidebarCollapsed()"></button>
                         <button class="landing-btn small" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="LandingBuilder.save()">Guardar</button>
                     </div>
                 </div>
@@ -1301,15 +1960,19 @@ var LandingBuilder = {
             <div class="lp-builder-footer" style="padding: 1.5rem; border-top: 1px solid #334155;">
                 <h4 style="color: #94a3b8; font-size: 0.875rem; margin-bottom: 1rem;">Agregar Sección</h4>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                    ${Object.keys(this.templates).map(type => `
+                    ${this.getAddSectionTypes().map(type => `
                         <button class="landing-btn secondary small" style="padding: 0.5rem; font-size: 0.75rem; text-transform: capitalize;" 
                                 onclick="LandingBuilder.addBlock('${type}', '${containerId}')">
-                            + ${type}
+                            + ${this.getBlockTypeLabel(type)}
                         </button>
                     `).join('')}
                 </div>
             </div>
         `;
+
+        // Keep toggle label in sync
+        this.updateMobileEditorToggleLabel();
+        this.bindSidebarToggleViewportListeners();
 
         const controlsContainer = sidebar.querySelector('#lp-builder-controls');
 
@@ -1332,8 +1995,39 @@ var LandingBuilder = {
             header.style.borderBottom = '1px solid #475569';
             header.style.paddingBottom = '0.5rem';
 
+            // Drag handle (reorder blocks/sections)
+            const titleRow = document.createElement('div');
+            titleRow.style.display = 'flex';
+            titleRow.style.alignItems = 'center';
+            titleRow.style.gap = '0.5rem';
+
+            const blockDragHandle = document.createElement('span');
+            blockDragHandle.innerText = '≡';
+            blockDragHandle.title = 'Arrastrar para reordenar sección';
+            blockDragHandle.draggable = true;
+            blockDragHandle.style.display = 'inline-flex';
+            blockDragHandle.style.alignItems = 'center';
+            blockDragHandle.style.justifyContent = 'center';
+            blockDragHandle.style.width = '24px';
+            blockDragHandle.style.height = '24px';
+            blockDragHandle.style.borderRadius = '6px';
+            blockDragHandle.style.border = '1px solid #334155';
+            blockDragHandle.style.background = '#111827';
+            blockDragHandle.style.color = '#94a3b8';
+            blockDragHandle.style.cursor = 'grab';
+            blockDragHandle.style.userSelect = 'none';
+
+            const blockDndType = 'application/x-lp-block';
+            blockDragHandle.addEventListener('dragstart', (e) => {
+                try {
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData(blockDndType, JSON.stringify({ fromIndex: index }));
+                    e.dataTransfer.setData('text/plain', `lp-block:${JSON.stringify({ fromIndex: index })}`);
+                } catch {}
+            });
+
             const title = document.createElement('h4');
-            title.innerText = `${block.type.toUpperCase()}`;
+            title.innerText = this.getBlockTypeLabel(block.type);
             title.style.margin = '0';
             title.style.border = 'none';
             title.style.padding = '0';
@@ -1371,9 +2065,48 @@ var LandingBuilder = {
             delBtn.onclick = () => this.deleteBlock(index, containerId);
             actions.appendChild(delBtn);
 
-            header.appendChild(title);
+            titleRow.appendChild(blockDragHandle);
+            titleRow.appendChild(title);
+            header.appendChild(titleRow);
             header.appendChild(actions);
             group.appendChild(header);
+
+            // Drop target for blocks
+            header.addEventListener('dragover', (e) => {
+                const raw = (() => {
+                    try { return e.dataTransfer.getData(blockDndType); } catch { return ''; }
+                })();
+                const rawPlain = (() => {
+                    try { return e.dataTransfer.getData('text/plain'); } catch { return ''; }
+                })();
+                if (!raw && !(rawPlain || '').startsWith('lp-block:')) return;
+                e.preventDefault();
+                header.style.background = 'rgba(148,163,184,0.08)';
+            });
+            header.addEventListener('dragleave', () => {
+                header.style.background = 'transparent';
+            });
+            header.addEventListener('drop', (e) => {
+                header.style.background = 'transparent';
+
+                let payload;
+                try {
+                    const raw = e.dataTransfer.getData(blockDndType);
+                    if (raw) payload = JSON.parse(raw);
+                    else {
+                        const plain = e.dataTransfer.getData('text/plain') || '';
+                        payload = plain.startsWith('lp-block:') ? JSON.parse(plain.slice('lp-block:'.length)) : null;
+                    }
+                } catch {
+                    payload = null;
+                }
+                const fromIndex = Number(payload?.fromIndex);
+                const toIndex = index;
+                if (!Number.isInteger(fromIndex) || fromIndex < 0 || fromIndex >= this.currentSchema.blocks.length) return;
+                if (fromIndex === toIndex) return;
+
+                this.moveBlockTo(fromIndex, toIndex, containerId);
+            });
 
             // Custom controls
             if (block.type === 'header_v2') {
@@ -1422,6 +2155,58 @@ var LandingBuilder = {
 
         // Initialize icons in sidebar
         if (window.feather) feather.replace();
+    },
+
+    isMobileViewport() {
+        try {
+            return window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+        } catch {
+            return window.innerWidth <= 768;
+        }
+    },
+
+    setSidebarCollapsed(collapsed) {
+        const shouldCollapse = !!collapsed;
+
+        // Only collapse on mobile; avoid trapping the user on desktop without a toggle.
+        if (!this.isMobileViewport() && shouldCollapse) return;
+
+        document.body.classList.toggle('builder-sidebar-collapsed', shouldCollapse);
+        this.updateMobileEditorToggleLabel();
+    },
+
+    toggleSidebarCollapsed() {
+        const collapsed = document.body.classList.contains('builder-sidebar-collapsed');
+        this.setSidebarCollapsed(!collapsed);
+    },
+
+    bindSidebarToggleViewportListeners() {
+        if (this._mobileEditorToggleBound) return;
+
+        const onResize = () => {
+            if (!this.isMobileViewport()) {
+                // Ensure sidebar is visible on desktop.
+                document.body.classList.remove('builder-sidebar-collapsed');
+            }
+            this.updateMobileEditorToggleLabel();
+        };
+
+        window.addEventListener('resize', onResize);
+        window.addEventListener('orientationchange', onResize);
+        this._mobileEditorToggleBound = true;
+    },
+
+    updateMobileEditorToggleLabel() {
+        const btn = document.getElementById('lp-builder-toggle-btn');
+        if (!btn) return;
+
+        const collapsed = document.body.classList.contains('builder-sidebar-collapsed');
+        const icon = collapsed ? 'eye' : 'eye-off';
+        const text = collapsed ? 'Mostrar editor' : 'Ocultar editor';
+        btn.innerHTML = `<i data-feather="${icon}"></i><span>${text}</span>`;
+        if (window.feather) {
+            try { feather.replace(); } catch {}
+        }
     },
 
     // --- Header V2: Logo picker ---
@@ -1625,7 +2410,7 @@ var LandingBuilder = {
         titleWrapper.style.marginBottom = '1rem';
         titleWrapper.innerHTML = `
             <label class="lp-control-label">Título de la Página</label>
-            <input type="text" class="lp-control-input" id="setting-title" value="${this.currentLanding.title || ''}" placeholder="Mi Landing Page">
+            <input type="text" class="lp-control-input" id="setting-title" value="${this.currentLanding.title || ''}" placeholder="Mi landing">
         `;
         group.appendChild(titleWrapper);
 
@@ -1816,12 +2601,12 @@ var LandingBuilder = {
     },
 
     addBlock(type, containerId) {
-        const template = JSON.parse(JSON.stringify(this.templates[type])); // Deep copy
+        const template = this.deepClone(this.templates[type]);
         
         // Ensure unique ID for the block to prevent duplicate IDs in HTML
         if (template.data && template.data.id) {
             const timestamp = Date.now().toString().slice(-6);
-             template.data.id = `${type}-${timestamp}`;
+             template.data.id = `${template.type || type}-${timestamp}`;
         }
 
         this.currentSchema.blocks.push(template);
@@ -1844,6 +2629,32 @@ var LandingBuilder = {
         
         this.renderCanvas(containerId);
         this.renderEditor(containerId);
+    },
+
+    moveBlockTo(fromIndex, toIndex, containerId) {
+        if (!Array.isArray(this.currentSchema?.blocks)) return;
+        const blocks = this.currentSchema.blocks;
+        if (fromIndex < 0 || fromIndex >= blocks.length) return;
+        if (toIndex < 0 || toIndex >= blocks.length) return;
+        if (fromIndex === toIndex) return;
+
+        const [moved] = blocks.splice(fromIndex, 1);
+        const insertAt = fromIndex < toIndex ? (toIndex - 1) : toIndex;
+        blocks.splice(insertAt, 0, moved);
+
+        this.renderCanvas(containerId);
+        this.renderEditor(containerId);
+    },
+
+    moveArrayItem(arrayRef, fromIndex, toIndex) {
+        if (!Array.isArray(arrayRef)) return;
+        if (fromIndex < 0 || fromIndex >= arrayRef.length) return;
+        if (toIndex < 0 || toIndex >= arrayRef.length) return;
+        if (fromIndex === toIndex) return;
+
+        const [moved] = arrayRef.splice(fromIndex, 1);
+        const insertAt = fromIndex < toIndex ? (toIndex - 1) : toIndex;
+        arrayRef.splice(insertAt, 0, moved);
     },
 
     deleteBlock(index, containerId) {
@@ -2081,22 +2892,34 @@ var LandingBuilder = {
             </div>
         `,
         video: (data) => {
-            // Helper to convert watch URLs to embed URLs
-            let src = data.videoUrl;
-            if (src.includes('watch?v=')) {
-                src = src.replace('watch?v=', 'embed/');
-                // Remove any ampersand parameters usually found after video id
-                if (src.includes('&')) src = src.split('&')[0];
-            } else if (src.includes('youtu.be/')) {
-                src = src.replace('youtu.be/', 'www.youtube.com/embed/');
+            let src = (data.videoUrl || '').trim();
+            const isNative = LandingBuilder.isNativeVideoUrl(src);
+
+            if (!isNative) {
+                if (src.includes('watch?v=')) {
+                    src = src.replace('watch?v=', 'embed/');
+                    if (src.includes('&')) src = src.split('&')[0];
+                } else if (src.includes('youtu.be/')) {
+                    src = src.replace('youtu.be/', 'www.youtube.com/embed/');
+                }
             }
-            
+
+            const header = data.title
+                ? `<div class="text-center mb-4"><h2>${data.title}</h2>${data.description ? `<p>${data.description}</p>` : ''}</div>`
+                : '';
+
+            const body = isNative
+                ? `<div style="width:100%; border-radius: 0.5rem; background:#000; overflow:hidden;">
+                        <video src="${src}" controls style="width:100%; height:auto; display:block;"></video>
+                   </div>`
+                : `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 0.5rem; background: #000;">
+                        <iframe src="${src}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                   </div>`;
+
             return `
             <div class="landing-container" id="${data.id || ''}">
-                ${data.title ? `<div class="text-center mb-4"><h2>${data.title}</h2>${data.description ? `<p>${data.description}</p>` : ''}</div>` : ''}
-                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 0.5rem; background: #000;">
-                    <iframe src="${src}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+                ${header}
+                ${body}
             </div>
         `},
         embed: (data) => {
@@ -2216,6 +3039,7 @@ var LandingBuilder = {
                         .lp-header-v2 { left: 0; width: 100%; box-sizing: border-box; }
                         .lp-header-v2 a:hover { color: ${linkHover} !important; }
                         body.has-builder-sidebar .lp-header-v2 { left: 300px !important; width: calc(100% - 300px) !important; }
+                        body.builder-sidebar-collapsed.has-builder-sidebar .lp-header-v2 { left: 0 !important; width: 100% !important; }
                         @media (max-width: 768px) { body.has-builder-sidebar .lp-header-v2 { left: 0 !important; width: 100% !important; } }
                         .lp-header-v2__inner { max-width: var(--lp-container); margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
                         .lp-header-v2__logo { font-size: 1.5rem; font-weight: 700; }
@@ -2232,7 +3056,7 @@ var LandingBuilder = {
                         <div class="lp-header-v2__inner">
                             <div class="lp-header-v2__logo" style="color:${logoColor};">${logoHtml}</div>
                             <nav class="lp-header-v2__nav">
-                                ${(data.links || []).map(l => `<a href="${l.url}" style="color:${linkColor};">${l.text}</a>`).join('')}
+                                ${(data.links || []).map((l, i) => `<a href="${l.url}" data-lp-dnd="1" data-lp-dnd-key="links" data-lp-dnd-index="${i}" style="color:${linkColor}; cursor:grab;">${l.text}</a>`).join('')}
                             </nav>
                         </div>
                     </header>
@@ -2249,6 +3073,15 @@ var LandingBuilder = {
             const minVh = (typeof data.minHeightVh === 'number') ? data.minHeightVh : 70;
             const textColor = data.textColor || '#ffffff';
             const bgImg = data.backgroundImageUrl || '';
+
+            const headlineFont = data.headlineFont || 'var(--lp-font-heading)';
+            const subheadlineFont = data.subheadlineFont || 'var(--lp-font-main)';
+            const headlineSizePx = (typeof data.headlineSizePx === 'number') ? data.headlineSizePx : 48;
+            const subheadlineSizePx = (typeof data.subheadlineSizePx === 'number') ? data.subheadlineSizePx : 21;
+            const headlineWeight = (typeof data.headlineWeight === 'number') ? data.headlineWeight : 700;
+            const subheadlineWeight = (typeof data.subheadlineWeight === 'number') ? data.subheadlineWeight : 300;
+            const headlineColor = data.headlineColor || textColor;
+            const subheadlineColor = data.subheadlineColor || textColor;
 
             const rgba = (hexOrRgba, a) => {
                 const h = (hexOrRgba || '').trim();
@@ -2267,7 +3100,7 @@ var LandingBuilder = {
                 ? `${overlay}, url('${bgImg}') center/cover no-repeat`
                 : overlay;
 
-            const buttons = (data.buttons || []).map(btn => {
+            const buttons = (data.buttons || []).map((btn, i) => {
                 const radius = (typeof btn.radiusPx === 'number') ? `${btn.radiusPx}px` : '50px';
                 const borderW = (typeof btn.borderWidth === 'number') ? `${btn.borderWidth}px` : '0px';
                 const borderC = btn.borderColor || 'transparent';
@@ -2276,7 +3109,7 @@ var LandingBuilder = {
                     : (btn.backgroundFrom || 'rgba(255,255,255,0.2)');
                 const shadow = btn.shadow || 'none';
                 return `
-                    <a href="${btn.url || '#'}" class="lp-hero-btn" style="display:inline-block; text-decoration:none; padding:15px 30px; border-radius:${radius}; font-weight:600; border:${borderW} solid ${borderC}; color:${btn.textColor || textColor}; background:${bgBtn}; box-shadow:${shadow}; transition:transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;">
+                    <a href="${btn.url || '#'}" class="lp-hero-btn" data-lp-dnd="1" data-lp-dnd-key="buttons" data-lp-dnd-index="${i}" draggable="true" style="cursor:grab; display:inline-block; text-decoration:none; padding:15px 30px; border-radius:${radius}; font-weight:600; border:${borderW} solid ${borderC}; color:${btn.textColor || textColor}; background:${bgBtn}; box-shadow:${shadow}; transition:transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;">
                         ${btn.text || 'Botón'}
                     </a>
                 `;
@@ -2285,8 +3118,8 @@ var LandingBuilder = {
             return `
                 <section id="${data.id || ''}" style="padding: 120px 20px 80px; text-align:center; color:${textColor}; background:${bg}; min-height:${minVh}vh; display:flex; align-items:center; justify-content:center;">
                     <div class="landing-container" style="max-width:800px;">
-                        <h1 style="font-size:3rem; margin:0 0 20px; font-weight:700; text-shadow:2px 2px 4px rgba(0,0,0,0.3);">${data.headline || ''}</h1>
-                        <p style="font-size:1.3rem; margin:0 0 30px; font-weight:300;">${data.subheadline || ''}</p>
+                        <h1 style="font-family:${headlineFont}; font-size:${headlineSizePx}px; margin:0 0 20px; font-weight:${headlineWeight}; color:${headlineColor}; text-shadow:2px 2px 4px rgba(0,0,0,0.3);">${data.headline || ''}</h1>
+                        <p style="font-family:${subheadlineFont}; font-size:${subheadlineSizePx}px; margin:0 0 30px; font-weight:${subheadlineWeight}; color:${subheadlineColor};">${data.subheadline || ''}</p>
                         <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">${buttons}</div>
                     </div>
                 </section>
@@ -2296,13 +3129,17 @@ var LandingBuilder = {
         features_v2: (data) => {
             const min = (typeof data.columnsMinWidthPx === 'number') ? data.columnsMinWidthPx : 300;
             const gap = (typeof data.gapPx === 'number') ? data.gapPx : 30;
-            const cards = (data.cards || []).map(card => {
+            const cards = (data.cards || []).map((card, i) => {
                 const radius = (typeof card.radiusPx === 'number') ? `${card.radiusPx}px` : '15px';
                 const shadow = card.shadow || '0 10px 30px rgba(0,0,0,0.1)';
                 const cardBg = card.cardBg || '#ffffff';
                 const iconBg = `linear-gradient(45deg, ${card.iconBgFrom || 'var(--lp-primary)'}, ${card.iconBgTo || 'var(--lp-secondary)'})`;
+                const img = (card.imageUrl || card.image) ? `
+                    <img src="${card.imageUrl || card.image}" alt="${(card.title || '').replace(/"/g, '&quot;')}" style="width:100%; height:160px; object-fit:cover; border-radius:${radius}; margin-bottom:18px;" loading="lazy">
+                ` : '';
                 return `
-                    <div style="background:${cardBg}; padding:40px 30px; border-radius:${radius}; box-shadow:${shadow}; text-align:center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='${shadow}';">
+                    <div data-lp-dnd="1" data-lp-dnd-key="cards" data-lp-dnd-index="${i}" draggable="true" style="cursor:grab; background:${cardBg}; padding:40px 30px; border-radius:${radius}; box-shadow:${shadow}; text-align:center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='${shadow}';">
+                        ${img}
                         <div style="width:80px; height:80px; background:${iconBg}; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:white; font-size:2rem;">
                             <i data-feather="${card.icon || 'star'}"></i>
                         </div>
@@ -2324,14 +3161,14 @@ var LandingBuilder = {
 
         gallery_v2: (data) => {
             const h = (typeof data.itemHeightPx === 'number') ? data.itemHeightPx : 200;
-            const items = (data.items || []).map(item => `
-                <div style="position:relative; border-radius:10px; overflow:hidden; height:${h}px; background-image:url('${item.imageUrl || ''}'); background-size:cover; background-position:center; background-repeat:no-repeat; display:flex; align-items:center; justify-content:center; color:white; font-weight:500; text-shadow:2px 2px 4px rgba(0,0,0,0.7); font-size:1.2rem;">
+            const items = (data.items || []).map((item, i) => `
+                <div data-lp-dnd="1" data-lp-dnd-key="items" data-lp-dnd-index="${i}" draggable="true" style="cursor:grab; position:relative; border-radius:10px; overflow:hidden; height:${h}px; background-image:url('${item.imageUrl || ''}'); background-size:cover; background-position:center; background-repeat:no-repeat; display:flex; align-items:center; justify-content:center; color:white; font-weight:500; text-shadow:2px 2px 4px rgba(0,0,0,0.7); font-size:1.2rem;">
                     ${item.label || ''}
                 </div>
             `).join('');
 
             return `
-                <section style="padding: 80px 20px;">
+                <section id="${data.id || ''}" style="padding: 80px 20px;">
                     <div class="landing-container">
                         <h2 style="text-align:center; font-size:2.5rem; color: var(--lp-primary); margin-bottom:50px; font-weight:600;">${data.title || ''}</h2>
                         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; margin-top:30px;">${items}</div>
@@ -2342,8 +3179,8 @@ var LandingBuilder = {
 
         testimonials_v2: (data) => {
             const bg = data.backgroundColor || '#f8f9fa';
-            const cards = (data.items || []).map(t => `
-                <div style="background:white; padding:30px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-bottom:20px;">
+            const cards = (data.items || []).map((t, i) => `
+                <div data-lp-dnd="1" data-lp-dnd-key="items" data-lp-dnd-index="${i}" draggable="true" style="cursor:grab; background:white; padding:30px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-bottom:20px;">
                     <p style="font-style:italic; color:#555; margin:0 0 15px;">"${t.quote || ''}"</p>
                     <div style="font-weight:600; color: var(--lp-primary);">- ${t.author || ''}</div>
                 </div>
@@ -2363,13 +3200,13 @@ var LandingBuilder = {
             const angle = (typeof data.bgAngleDeg === 'number') ? data.bgAngleDeg : 135;
             const bg = `linear-gradient(${angle}deg, ${data.bgFrom || 'var(--lp-primary)'} 0%, ${data.bgTo || 'var(--lp-secondary)'} 100%)`;
             const textColor = data.textColor || '#ffffff';
-            const buttons = (data.buttons || []).map(btn => {
+            const buttons = (data.buttons || []).map((btn, i) => {
                 const radius = (typeof btn.radiusPx === 'number') ? `${btn.radiusPx}px` : '25px';
                 const bgBtn = btn.bg || 'var(--lp-accent)';
                 const hoverBg = btn.hoverBg || bgBtn;
                 return `
-                    <a href="${btn.url || '#'}"
-                       style="background:${bgBtn}; color:white; padding:15px 25px; border:none; border-radius:${radius}; font-size:1rem; font-weight:600; cursor:pointer; text-decoration:none; transition: all 0.3s ease; display:inline-block;"
+                    <a href="${btn.url || '#'}" data-lp-dnd="1" data-lp-dnd-key="buttons" data-lp-dnd-index="${i}" draggable="true"
+                       style="background:${bgBtn}; color:white; padding:15px 25px; border:none; border-radius:${radius}; font-size:1rem; font-weight:600; cursor:grab; text-decoration:none; transition: all 0.3s ease; display:inline-block;"
                        onmouseover="this.style.background='${hoverBg}'; this.style.transform='translateY(-2px)';"
                        onmouseout="this.style.background='${bgBtn}'; this.style.transform='translateY(0)';">
                         ${btn.text || 'Botón'}
@@ -2388,13 +3225,22 @@ var LandingBuilder = {
             `;
         },
 
-        footer_v2: (data) => `
-            <footer style="background:${data.backgroundColor || 'var(--lp-primary)'}; color:${data.textColor || '#fff'}; padding:30px 20px; text-align:center;">
-                <div class="landing-container">
-                    <p style="margin:0; font-size:0.9rem;">${data.text || ''}</p>
-                </div>
-            </footer>
-        `
+        footer_v2: (data) => {
+            const links = Array.isArray(data.links) ? data.links : [];
+            const linksHtml = links.length
+                ? `<div style="margin-top:10px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+                        ${links.map((l, i) => `<a href="${l.url || '#'}" data-lp-dnd="1" data-lp-dnd-key="links" data-lp-dnd-index="${i}" draggable="true" style="cursor:grab; color:${data.textColor || '#fff'}; text-decoration:underline; font-size:0.85rem;">${l.text || ''}</a>`).join('')}
+                   </div>`
+                : '';
+            return `
+                <footer style="background:${data.backgroundColor || 'var(--lp-primary)'}; color:${data.textColor || '#fff'}; padding:30px 20px; text-align:center;">
+                    <div class="landing-container">
+                        <p style="margin:0; font-size:0.9rem;">${data.text || ''}</p>
+                        ${linksHtml}
+                    </div>
+                </footer>
+            `;
+        }
     },
 
     initAnimations() {
@@ -2424,8 +3270,52 @@ window.initLanding = (schema) => LandingBuilder.init('landing-builder-root', sch
 // Check if we have a slug in URL to fetch real data, otherwise use mock
 (async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const slug = urlParams.get('slug');
+    let slug = urlParams.get('slug');
     let landing = null;
+
+    const hasUsableSchema = (l) => {
+        const blocks = l?.data?.blocks;
+        return Array.isArray(blocks) && blocks.length > 0;
+    };
+
+    const getDefaultDemoSlug = async () => {
+        try {
+            const resSettings = await fetch('/api/settings/public');
+            if (!resSettings.ok) return null;
+            const settings = await resSettings.json();
+            const demoSlug = (settings?.demo_landing_slug || '').trim();
+            return demoSlug || null;
+        } catch {
+            return null;
+        }
+    };
+
+    const loadDemoSchema = async (demoSlug) => {
+        if (!demoSlug) return null;
+        try {
+            const res = await fetch(`/api/landings/slug/${encodeURIComponent(demoSlug)}`);
+            if (!res.ok) return null;
+            const demoLanding = await res.json();
+            return hasUsableSchema(demoLanding) ? demoLanding.data : null;
+        } catch {
+            return null;
+        }
+    };
+
+    // If no slug provided, try to load configured default demo landing
+    if (!slug) {
+        try {
+            const demoSlug = await getDefaultDemoSlug();
+            if (demoSlug) {
+                slug = demoSlug;
+                urlParams.set('slug', demoSlug);
+                const nextUrl = `${window.location.pathname}?${urlParams.toString()}`;
+                window.history.replaceState({}, '', nextUrl);
+            }
+        } catch (e) {
+            console.warn('No se pudo obtener demo predeterminado:', e);
+        }
+    }
 
     if (slug) {
         try {
@@ -2440,6 +3330,16 @@ window.initLanding = (schema) => LandingBuilder.init('landing-builder-root', sch
             if (res.ok) {
                 landing = await res.json();
                 console.log("Loaded landing:", landing);
+
+                // If this landing has not been saved with builder content yet,
+                // initialize it using the configured demo as a starting template.
+                if (!hasUsableSchema(landing)) {
+                    const demoSlug = await getDefaultDemoSlug();
+                    const demoSchema = await loadDemoSchema(demoSlug);
+                    if (demoSchema) {
+                        landing.data = demoSchema;
+                    }
+                }
             } else {
                 console.error("Error fetching landing:", res.status);
                 // alert("No se pudo cargar la landing. Verifica que existe y tienes permisos.");

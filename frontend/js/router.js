@@ -55,10 +55,17 @@ document.addEventListener("DOMContentLoaded", () => {
       fetch(scriptPath, { method: 'HEAD' })
         .then(res => {
           if (res.ok) {
+            // Remove previously injected SPA page script (avoid duplicates / stale code)
+            document.querySelectorAll('script[data-spa-page-script="1"]').forEach(s => s.remove());
+
             const script = document.createElement('script');
-            script.src = scriptPath;
+            // Builder tends to change often; add a cache buster to prevent stale caching issues
+            const cacheBuster = (page === 'builder') ? `?v=${Date.now()}` : '';
+            script.src = `${scriptPath}${cacheBuster}`;
             script.type = 'text/javascript';
             script.defer = true;
+            script.setAttribute('data-spa-page-script', '1');
+            script.setAttribute('data-page', page);
             document.body.appendChild(script);
           } else {
             console.log(`🚫 Script no encontrado: ${scriptPath}`);
